@@ -1,0 +1,51 @@
+# DigitalOcean App Platform Deployment Configuration
+
+# App Name
+name: rs999-static-site
+
+# Deployment Settings
+region: nyc  # Change to: sgp (Singapore), blr (Bangalore), lon (London), etc.
+
+# Static Site Configuration
+static_sites:
+  - name: rs999-website
+    github:
+      repo: giriv11/rs999static
+      branch: main
+      deploy_on_push: true  # Auto-deploy on every push!
+    
+    # Build Configuration
+    build_command: npm install && npm run build-css
+    
+    # Output directory (root of your site)
+    output_dir: /
+    
+    # Catchall document for SPA routing
+    catchall_document: index.html
+    
+    # Environment Variables (optional)
+    envs: []
+    
+    # Custom Domain (add after deployment)
+    domains:
+      - domain: rs999.in
+        type: PRIMARY
+      - domain: www.rs999.in
+        type: ALIAS
+    
+    # Error document
+    error_document: 404.html
+    
+    # Routing rules
+    routes:
+      - path: /admin.html
+        preserve_path_prefix: true
+      - path: /posts
+        preserve_path_prefix: true
+      - path: /pages
+        preserve_path_prefix: true
+
+# Alerts (optional)
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
