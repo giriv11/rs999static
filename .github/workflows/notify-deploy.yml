@@ -1,0 +1,43 @@
+name: Trigger 20i Git Pull
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  notify-20i:
+    name: Notify 20i to Pull Changes
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+
+      - name: 🔔 Trigger 20i Webhook (if configured)
+        if: ${{ secrets.WEBHOOK_URL != '' }}
+        run: |
+          curl -X POST "${{ secrets.WEBHOOK_URL }}" \
+            -H "Content-Type: application/json" \
+            -d '{
+              "event": "push",
+              "repository": "${{ github.repository }}",
+              "branch": "${{ github.ref_name }}",
+              "commit": "${{ github.sha }}",
+              "author": "${{ github.actor }}"
+            }'
+          echo "✅ Webhook triggered successfully!"
+
+      - name: 📢 Deployment Notice
+        run: |
+          echo "================================================"
+          echo "📦 Changes pushed to GitHub"
+          echo "🔄 Action required: Log into 20i dashboard"
+          echo "   Navigate to: Git > Pull Latest > Deploy"
+          echo "================================================"
+          echo ""
+          echo "💡 To enable automatic deployment:"
+          echo "   1. Set up SSH access on 20i"
+          echo "   2. Add GitHub Secrets (see DEPLOYMENT_GUIDE.md)"
+          echo "   3. Use deploy.yml workflow instead"
