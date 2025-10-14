@@ -222,9 +222,10 @@ document.getElementById('image-upload').addEventListener('change', async functio
     return;
   }
   
-  // Validate file size (max 1MB for GitHub API)
-  if (file.size > 1 * 1024 * 1024) {
-    showNotification('Image size must be less than 1MB. Please compress or resize your image, or use an external image URL.', 'error');
+  // Validate file size (max 700KB - GitHub API limit is ~1MB for base64)
+  // Base64 encoding increases size by ~33%, so 700KB file = ~930KB base64
+  if (file.size > 700 * 1024) {
+    showNotification('Image size must be less than 700KB. Please compress your image using TinyPNG.com or use an external image URL (Imgur, Cloudinary).', 'error');
     e.target.value = ''; // Clear the file input
     return;
   }

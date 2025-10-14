@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Blog Post">
+  <meta name="description" content="Blog Post" id="meta-description">
+  <meta name="keywords" content="" id="meta-keywords">
   <title id="post-title">Blog Post | Rs999 Web Services</title>
   
   <link href="../assets/css/output.css" rel="stylesheet">
@@ -108,9 +109,19 @@
           const seo = post.seo || {};
           const metaTitle = seo.metaTitle || post.title;
           const metaDescription = seo.metaDescription || post.excerpt;
+          const focusKeyword = seo.focusKeyword || '';
           
+          // Update title and meta description
           document.getElementById('post-title').textContent = metaTitle + ' | Rs999 Web Services';
-          document.querySelector('meta[name="description"]').setAttribute('content', metaDescription);
+          document.getElementById('meta-description').setAttribute('content', metaDescription);
+          
+          // Update keywords (tags + focus keyword)
+          let keywords = [];
+          if (focusKeyword) keywords.push(focusKeyword);
+          if (post.tags && post.tags.length > 0) keywords.push(...post.tags);
+          if (keywords.length > 0) {
+            document.getElementById('meta-keywords').setAttribute('content', keywords.join(', '));
+          }
           
           // Add Open Graph tags if not present
           if (!document.querySelector('meta[property="og:title"]')) {
