@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Rs999 Blog Management</title>
+  <link rel="stylesheet" href="assets/css/output.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-primary-900 to-secondary-900 min-h-screen">
+  
+  <!-- Password Gate -->
+  <div id="passwordGate" class="flex items-center justify-center min-h-screen p-4">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full">
+      <div class="text-center mb-8">
+        <div class="w-20 h-20 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+          <i class="fas fa-shield-halved text-white text-3xl"></i>
+        </div>
+        <h1 class="text-3xl font-black text-gray-900 mb-2">Admin Access</h1>
+        <p class="text-gray-600">Enter password to manage blog posts</p>
+      </div>
+      
+      <form id="passwordForm" class="space-y-4">
+        <div class="relative">
+          <div class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
+            <i class="fas fa-lock text-primary-600"></i>
+          </div>
+          <input
+            type="password"
+            id="passwordInput"
+            required
+            class="w-full pl-14 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 outline-none text-gray-900"
+            placeholder="Enter admin password"
+          />
+        </div>
+        
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-3 px-4 rounded-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+        >
+          <i class="fas fa-sign-in-alt mr-2"></i>
+          Access Admin Panel
+        </button>
+        
+        <p id="errorMessage" class="text-red-600 text-sm text-center hidden">
+          <i class="fas fa-exclamation-circle mr-1"></i>
+          Invalid password. Please try again.
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Panel (Hidden until authenticated) -->
+  <div id="adminPanel" class="hidden min-h-screen p-4 md:p-8">
+    <div class="max-w-5xl mx-auto">
+      
+      <!-- Header -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 mb-6">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-gradient-to-r from-primary-600 to-secondary-600 rounded-xl flex items-center justify-center">
+              <i class="fas fa-pen-to-square text-white text-xl"></i>
+            </div>
+            <div>
+              <h1 class="text-2xl font-black text-gray-900">Blog Management</h1>
+              <p class="text-sm text-gray-600">Create and manage blog posts</p>
+            </div>
+          </div>
+          <button
+            onclick="logout()"
+            class="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors font-semibold"
+          >
+            <i class="fas fa-sign-out-alt mr-2"></i>
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <!-- Blog Post Form -->
+      <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8">
+        <div class="mb-6">
+          <h2 class="text-xl font-bold text-gray-900 mb-2">
+            <i class="fas fa-plus-circle text-primary-600 mr-2"></i>
+            Create New Blog Post
+          </h2>
+          <p class="text-gray-600 text-sm">Fill in the details below to create a new blog post</p>
+        </div>
+
+        <form id="blogForm" class="space-y-6">
+          <!-- Title -->
+          <div>
+            <label for="title" class="block text-sm font-bold text-gray-700 mb-2">
+              <i class="fas fa-heading text-primary-600 mr-2"></i>
+              Post Title *
+            </label>
+            <input
+              type="text"
+              id="title"
+              required
+              class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 outline-none text-gray-900"
+              placeholder="Enter post title"
+            />
+          </div>
+
+          <!-- Slug -->
+          <div>
+            <label for="slug" class="block text-sm font-bold text-gray-700 mb-2">
+              <i class="fas fa-link text-secondary-600 mr-2"></i>
+              URL Slug *
+            </label>
+            <div class="flex items-center gap-2">
+              <span class="text-gray-500 text-sm">post-</span>
+              <input
+                type="text"
+                id="slug"
+                required
+                pattern="[a-z0-9-]+"
+                class="flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-secondary-500 focus:ring-2 focus:ring-secondary-100 transition-all duration-300 outline-none text-gray-900"
+                placeholder="url-friendly-slug"
+              />
+              <span class="text-gray-500 text-sm">.html</span>
+            </div>
+            <p class="text-xs text-gray-500 mt-1">Use lowercase letters, numbers, and hyphens only</p>
+          </div>
+
+          <!-- Date -->
+          <div>
+            <label for="date" class="block text-sm font-bold text-gray-700 mb-2">
+              <i class="fas fa-calendar text-green-600 mr-2"></i>
+              Publication Date *
+            </label>
+            <input
+              type="date"
+              id="date"
+              required
+              class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-300 outline-none text-gray-900"
+            />
+          </div>
+
+          <!-- Image URL -->
+          <div>
+            <label for="image" class="block text-sm font-bold text-gray-700 mb-2">
+              <i class="fas fa-image text-purple-600 mr-2"></i>
+              Featured Image URL
+            </label>
+            <input
+              type="url"
+              id="image"
+              class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition-all duration-300 outline-none text-gray-900"
+              placeholder="https://example.com/image.jpg"
+            />
+            <p class="text-xs text-gray-500 mt-1">Optional: Add a featured image URL</p>
+          </div>
+
+          <!-- Excerpt -->
+          <div>
+            <label for="excerpt" class="block text-sm font-bold text-gray-700 mb-2">
+              <i class="fas fa-file-lines text-orange-600 mr-2"></i>
+              Excerpt (150 characters max) *
+            </label>
+            <textarea
+              id="excerpt"
+              required
+              maxlength="150"
+              rows="2"
+              class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-orange-500 focus:ring-2 focus:ring-orange-100 transition-all duration-300 outline-none resize-none text-gray-900"
+              placeholder="Brief description of the post..."
+            ></textarea>
+            <div class="flex justify-between items-center mt-1">
+              <p class="text-xs text-gray-500">Short summary for post previews</p>
+              <span id="excerptCount" class="text-xs text-gray-500">0/150</span>
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div>
+            <label for="content" class="block text-sm font-bold text-gray-700 mb-2">
+              <i class="fas fa-paragraph text-blue-600 mr-2"></i>
+              Post Content (HTML) *
+            </label>
+            <textarea
+              id="content"
+              required
+              rows="12"
+              class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 transition-all duration-300 outline-none resize-none text-gray-900 font-mono text-sm"
+              placeholder="<p>Your HTML content here...</p>"
+            ></textarea>
+            <p class="text-xs text-gray-500 mt-1">Write your post content using HTML tags</p>
+          </div>
+
+          <!-- Category/Tags (Optional) -->
+          <div>
+            <label for="category" class="block text-sm font-bold text-gray-700 mb-2">
+              <i class="fas fa-tags text-pink-600 mr-2"></i>
+              Category
+            </label>
+            <input
+              type="text"
+              id="category"
+              class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-100 transition-all duration-300 outline-none text-gray-900"
+              placeholder="Web Design, SEO, WordPress, etc."
+            />
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex flex-col sm:flex-row gap-4 pt-4">
+            <button
+              type="submit"
+              class="flex-1 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-4 px-6 rounded-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+            >
+              <i class="fas fa-download mr-2"></i>
+              Generate & Download JSON Files
+            </button>
+            <button
+              type="button"
+              onclick="resetForm()"
+              class="sm:w-auto px-6 py-4 bg-gray-200 text-gray-700 font-bold rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              <i class="fas fa-rotate-right mr-2"></i>
+              Reset Form
+            </button>
+          </div>
+        </form>
+
+        <!-- Success Message -->
+        <div id="successMessage" class="hidden mt-6 p-4 bg-green-100 border-l-4 border-green-500 rounded-lg">
+          <div class="flex items-center">
+            <i class="fas fa-check-circle text-green-600 text-xl mr-3"></i>
+            <div>
+              <p class="font-bold text-green-900">Success!</p>
+              <p class="text-sm text-green-700">JSON files generated. Check your downloads folder.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Instructions -->
+      <div class="bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200 rounded-2xl p-6 mt-6">
+        <h3 class="font-bold text-gray-900 mb-3 flex items-center">
+          <i class="fas fa-info-circle text-primary-600 mr-2"></i>
+          Next Steps After Downloading
+        </h3>
+        <ol class="space-y-2 text-sm text-gray-700">
+          <li class="flex items-start">
+            <span class="font-bold text-primary-600 mr-2">1.</span>
+            <span>Save both downloaded JSON files to your local project's <code class="bg-white px-2 py-0.5 rounded">posts/</code> folder</span>
+          </li>
+          <li class="flex items-start">
+            <span class="font-bold text-primary-600 mr-2">2.</span>
+            <span>Update <code class="bg-white px-2 py-0.5 rounded">posts/index.json</code> by merging the new post data</span>
+          </li>
+          <li class="flex items-start">
+            <span class="font-bold text-primary-600 mr-2">3.</span>
+            <span>Commit changes: <code class="bg-white px-2 py-0.5 rounded text-xs">git add . && git commit -m "Add new blog post" && git push</code></span>
+          </li>
+          <li class="flex items-start">
+            <span class="font-bold text-primary-600 mr-2">4.</span>
+            <span>Deploy via My20i: Pull latest > Deploy HEAD Commit</span>
+          </li>
+        </ol>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Password Configuration - CHANGE THIS PASSWORD!
+    const ADMIN_PASSWORD = 'Rs999Admin@2025'; // Change this to your secure password
+
+    // Password Gate Handler
+    document.getElementById('passwordForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const password = document.getElementById('passwordInput').value;
+      const errorMessage = document.getElementById('errorMessage');
+      
+      if (password === ADMIN_PASSWORD) {
+        document.getElementById('passwordGate').classList.add('hidden');
+        document.getElementById('adminPanel').classList.remove('hidden');
+        sessionStorage.setItem('adminAuthenticated', 'true');
+      } else {
+        errorMessage.classList.remove('hidden');
+        document.getElementById('passwordInput').value = '';
+        document.getElementById('passwordInput').focus();
+        
+        // Hide error after 3 seconds
+        setTimeout(() => {
+          errorMessage.classList.add('hidden');
+        }, 3000);
+      }
+    });
+
+    // Check if already authenticated
+    if (sessionStorage.getItem('adminAuthenticated') === 'true') {
+      document.getElementById('passwordGate').classList.add('hidden');
+      document.getElementById('adminPanel').classList.remove('hidden');
+    }
+
+    // Logout Function
+    function logout() {
+      sessionStorage.removeItem('adminAuthenticated');
+      document.getElementById('adminPanel').classList.add('hidden');
+      document.getElementById('passwordGate').classList.remove('hidden');
+      document.getElementById('passwordInput').value = '';
+    }
+
+    // Auto-generate slug from title
+    document.getElementById('title').addEventListener('input', function(e) {
+      const slug = e.target.value
+        .toLowerCase()
+        .replace(/[^a-z0-9\s-]/g, '')
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-')
+        .trim();
+      document.getElementById('slug').value = slug;
+    });
+
+    // Set today's date as default
+    document.getElementById('date').valueAsDate = new Date();
+
+    // Excerpt character counter
+    document.getElementById('excerpt').addEventListener('input', function(e) {
+      document.getElementById('excerptCount').textContent = `${e.target.value.length}/150`;
+    });
+
+    // Form Submission Handler
+    document.getElementById('blogForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const formData = {
+        title: document.getElementById('title').value.trim(),
+        slug: document.getElementById('slug').value.trim(),
+        date: document.getElementById('date').value,
+        image: document.getElementById('image').value.trim() || '',
+        excerpt: document.getElementById('excerpt').value.trim(),
+        content: document.getElementById('content').value.trim(),
+        category: document.getElementById('category').value.trim() || 'Uncategorized'
+      };
+
+      // Generate post JSON
+      const postJSON = {
+        title: formData.title,
+        slug: formData.slug,
+        excerpt: formData.excerpt,
+        content: formData.content,
+        date: formData.date,
+        image: formData.image,
+        category: formData.category
+      };
+
+      // Generate index entry
+      const indexEntry = {
+        slug: formData.slug,
+        title: formData.title,
+        date: formData.date,
+        excerpt: formData.excerpt,
+        image: formData.image,
+        category: formData.category
+      };
+
+      // Download post JSON
+      downloadJSON(postJSON, `${formData.slug}.json`);
+      
+      // Download index entry JSON
+      setTimeout(() => {
+        downloadJSON([indexEntry], `index-update-${formData.slug}.json`);
+      }, 500);
+
+      // Show success message
+      const successMessage = document.getElementById('successMessage');
+      successMessage.classList.remove('hidden');
+      setTimeout(() => {
+        successMessage.classList.add('hidden');
+      }, 5000);
+
+      // Optional: Reset form after submission
+      setTimeout(() => {
+        if (confirm('Files downloaded! Reset form for new post?')) {
+          resetForm();
+        }
+      }, 1000);
+    });
+
+    // Download JSON Helper Function
+    function downloadJSON(data, filename) {
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    // Reset Form Function
+    function resetForm() {
+      document.getElementById('blogForm').reset();
+      document.getElementById('date').valueAsDate = new Date();
+      document.getElementById('excerptCount').textContent = '0/150';
+    }
+
+    // Prevent accidental page close
+    window.addEventListener('beforeunload', function(e) {
+      const form = document.getElementById('blogForm');
+      if (form.title.value || form.content.value) {
+        e.preventDefault();
+        e.returnValue = '';
+      }
+    });
+  </script>
+
+</body>
+</html>
