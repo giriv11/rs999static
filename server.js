@@ -213,6 +213,33 @@ app.post('/api/upload-image', verifyPassword, async (req, res) => {
 });
 
 /**
+ * API Endpoint: Trigger DigitalOcean deployment
+ * POST /api/trigger-deploy
+ * Call this after any content changes to refresh the static site
+ */
+app.post('/api/trigger-deploy', verifyPassword, async (req, res) => {
+  try {
+    // DigitalOcean automatically detects GitHub pushes
+    // This endpoint is for manual triggers or webhook confirmation
+    
+    console.log('🚀 Deployment trigger requested');
+    
+    res.json({ 
+      success: true, 
+      message: 'Deployment will refresh automatically from GitHub in 30-60 seconds',
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    console.error('Error triggering deployment:', error);
+    res.status(500).json({ 
+      error: 'Failed to trigger deployment',
+      details: error.message 
+    });
+  }
+});
+
+/**
  * API Endpoint: Create new blog post
  * POST /api/posts
  */

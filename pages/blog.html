@@ -248,7 +248,8 @@
     // Load blog posts dynamically from posts/index.json
     async function loadBlogPosts() {
       try {
-        const response = await fetch('../posts/index.json');
+        // Add cache-busting parameter to ensure fresh data
+        const response = await fetch(`../posts/index.json?t=${Date.now()}`);
         allPosts = await response.json();
         
         currentPage = getPageFromURL();

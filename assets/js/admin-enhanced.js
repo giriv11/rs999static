@@ -326,7 +326,7 @@ document.getElementById('blogForm').addEventListener('submit', async function(e)
     const result = await response.json();
     
     showNotification(
-      editingPost ? 'Post updated successfully!' : 'Post published successfully!',
+      editingPost ? 'Post updated successfully! Changes will appear on live site in 30-60 seconds.' : 'Post published successfully! It will appear on live site in 30-60 seconds.',
       'success'
     );
     
@@ -508,7 +508,7 @@ async function deletePost(slug) {
       throw new Error('Failed to delete post');
     }
     
-    showNotification('Post deleted successfully', 'success');
+    showNotification('Post deleted successfully! Changes will appear on live site in 30-60 seconds.', 'success');
     loadAllPosts();
     
   } catch (error) {
