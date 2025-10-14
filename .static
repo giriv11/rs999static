@@ -1,0 +1,2 @@
+# This file tells DigitalOcean App Platform that this is a static site
+# It should not be treated as a Node.js container application
