@@ -138,6 +138,81 @@ const verifyPassword = (req, res, next) => {
 };
 
 /**
+ * API Endpoint: Upload image to GitHub
+ * POST /api/upload-image
+ * Expects: { filename: string, base64Data: string }
+ * Returns: { url: string }
+ */
+app.post('/api/upload-image', verifyPassword, async (req, res) => {
+  try {
+    const { filename, base64Data } = req.body;
+
+    if (!filename || !base64Data) {
+      return res.status(400).json({ error: 'Missing filename or base64Data' });
+    }
+
+    // Clean filename - remove any path components and spaces
+    const cleanFilename = filename.replace(/[^a-zA-Z0-9.-]/g, '_');
+    const timestamp = Date.now();
+    const uniqueFilename = `${timestamp}_${cleanFilename}`;
+    const imagePath = `images/${uniqueFilename}`;
+
+    // Remove data URL prefix if present (data:image/png;base64,...)
+    const base64Content = base64Data.replace(/^data:image\/\w+;base64,/, '');
+
+    if (!GITHUB_TOKEN) {
+      return res.status(500).json({ error: 'GITHUB_TOKEN not configured' });
+    }
+
+    // Upload to GitHub
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${imagePath}`;
+    
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        message: `Upload image: ${uniqueFilename}`,
+        content: base64Content,
+        branch: GITHUB_BRANCH
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.error('GitHub API error:', errorData);
+      return res.status(response.status).json({ 
+        error: 'Failed to upload image to GitHub',
+        details: errorData.message 
+      });
+    }
+
+    const data = await response.json();
+    
+    // Return the raw GitHub content URL
+    const imageUrl = data.content.download_url;
+
+    console.log(`✅ Image uploaded: ${imagePath}`);
+    res.json({ 
+      success: true, 
+      url: imageUrl,
+      filename: uniqueFilename,
+      path: imagePath
+    });
+
+  } catch (error) {
+    console.error('Error uploading image:', error);
+    res.status(500).json({ 
+      error: 'Failed to upload image',
+      details: error.message 
+    });
+  }
+});
+
+/**
  * API Endpoint: Create new blog post
  * POST /api/posts
  */

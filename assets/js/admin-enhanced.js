@@ -211,39 +211,59 @@ document.getElementById('image-upload').addEventListener('change', async functio
   const file = e.target.files[0];
   if (!file) return;
   
-  // Show preview
-  const reader = new FileReader();
-  reader.onload = function(event) {
-    const preview = document.getElementById('image-preview');
-    preview.querySelector('img').src = event.target.result;
-    preview.classList.remove('hidden');
-  };
-  reader.readAsDataURL(file);
-  
-  // Upload to GitHub
-  try {
-    const formData = new FormData();
-    formData.append('image', file);
-    
-    const response = await fetch(`${API_URL}/upload-image`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${ADMIN_PASSWORD}`
-      },
-      body: formData
-    });
-    
-    if (response.ok) {
-      const data = await response.json();
-      document.getElementById('image').value = data.url;
-      showNotification('Image uploaded successfully!', 'success');
-    } else {
-      throw new Error('Upload failed');
-    }
-  } catch (error) {
-    console.error('Image upload error:', error);
-    showNotification('Image upload failed. You can still paste a URL.', 'error');
+  // Validate file type
+  if (!file.type.startsWith('image/')) {
+    showNotification('Please select an image file', 'error');
+    return;
   }
+  
+  // Validate file size (max 5MB)
+  if (file.size > 5 * 1024 * 1024) {
+    showNotification('Image size should be less than 5MB', 'error');
+    return;
+  }
+  
+  showNotification('Uploading image...', 'info');
+  
+  // Read file as base64
+  const reader = new FileReader();
+  reader.onload = async function(event) {
+    const base64Data = event.target.result;
+    
+    // Show preview
+    const preview = document.getElementById('image-preview');
+    preview.querySelector('img').src = base64Data;
+    preview.classList.remove('hidden');
+    
+    // Upload to GitHub
+    try {
+      const response = await fetch(`${API_URL}/upload-image`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${ADMIN_PASSWORD}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          filename: file.name,
+          base64Data: base64Data
+        })
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        document.getElementById('image').value = data.url;
+        showNotification('Image uploaded successfully!', 'success');
+      } else {
+        const error = await response.json();
+        throw new Error(error.details || 'Upload failed');
+      }
+    } catch (error) {
+      console.error('Image upload error:', error);
+      showNotification(`Image upload failed: ${error.message}. You can still paste a URL.`, 'error');
+    }
+  };
+  
+  reader.readAsDataURL(file);
 });
 
 // Image URL preview
