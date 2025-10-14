@@ -14,6 +14,95 @@ const execPromise = util.promisify(exec);
 const app = express();
 const PORT = process.env.PORT || 3001;
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Rs999Admin@2025'; // Must match admin.html password
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_REPO = process.env.GITHUB_REPO || 'giriv11/rs999static';
+const GITHUB_BRANCH = 'main';
+
+/**
+ * GitHub API Helper: Create or update a file
+ */
+async function githubUpdateFile(filePath, content, message) {
+  if (!GITHUB_TOKEN) {
+    throw new Error('GITHUB_TOKEN not configured');
+  }
+
+  const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`;
+  
+  try {
+    // Get current file SHA (needed for updates)
+    const getResponse = await fetch(url, {
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json'
+      }
+    });
+    
+    let sha = null;
+    if (getResponse.ok) {
+      const data = await getResponse.json();
+      sha = data.sha;
+    }
+    
+    // Create/update file
+    const body = {
+      message,
+      content: Buffer.from(content).toString('base64'),
+      branch: GITHUB_BRANCH
+    };
+    
+    if (sha) {
+      body.sha = sha; // Required for updates
+    }
+    
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${GITHUB_TOKEN}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(body)
+    });
+    
+    if (!response.ok) {
+      const error = await response.json();
+      throw new Error(`GitHub API error: ${error.message}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error('GitHub API error:', error);
+    throw error;
+  }
+}
+
+/**
+ * GitHub API Helper: Get file content
+ */
+async function githubGetFile(filePath) {
+  if (!GITHUB_TOKEN) {
+    throw new Error('GITHUB_TOKEN not configured');
+  }
+
+  const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`;
+  
+  const response = await fetch(url, {
+    headers: {
+      'Authorization': `token ${GITHUB_TOKEN}`,
+      'Accept': 'application/vnd.github.v3+json'
+    }
+  });
+  
+  if (!response.ok) {
+    if (response.status === 404) {
+      return null; // File doesn't exist
+    }
+    throw new Error(`GitHub API error: ${response.statusText}`);
+  }
+  
+  const data = await response.json();
+  return Buffer.from(data.content, 'base64').toString('utf8');
+}
 
 // Middleware
 app.use(express.json());
@@ -61,18 +150,6 @@ app.post('/api/posts', verifyPassword, async (req, res) => {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const postsDir = path.join(__dirname, 'posts');
-    const postFilePath = path.join(postsDir, `${slug}.json`);
-    const indexFilePath = path.join(postsDir, 'index.json');
-
-    // Check if post already exists
-    try {
-      await fs.access(postFilePath);
-      return res.status(409).json({ error: 'Post with this slug already exists' });
-    } catch {
-      // Post doesn't exist, continue
-    }
-
     // Create post JSON
     const postData = {
       title,
@@ -84,20 +161,7 @@ app.post('/api/posts', verifyPassword, async (req, res) => {
       category: category || 'Uncategorized'
     };
 
-    // Save post file
-    await fs.writeFile(postFilePath, JSON.stringify(postData, null, 2));
-    console.log(`✅ Created post file: ${slug}.json`);
-
-    // Update index.json
-    let indexData = [];
-    try {
-      const indexContent = await fs.readFile(indexFilePath, 'utf8');
-      indexData = JSON.parse(indexContent);
-    } catch (error) {
-      console.log('Creating new index.json');
-    }
-
-    // Add new post to beginning of array
+    // Create index entry
     const indexEntry = {
       slug,
       title,
@@ -107,42 +171,61 @@ app.post('/api/posts', verifyPassword, async (req, res) => {
       category: category || 'Uncategorized'
     };
 
-    indexData.unshift(indexEntry);
+    console.log(`📝 Creating post: ${slug}`);
 
-    // Save updated index
-    await fs.writeFile(indexFilePath, JSON.stringify(indexData, null, 2));
-    console.log(`✅ Updated index.json`);
-
-    // Git operations
+    // Get current index.json from GitHub
+    let indexData = [];
     try {
-      await execPromise('git add posts/');
-      console.log('✅ Git add completed');
-
-      await execPromise(`git commit -m "Add new blog post: ${title}"`);
-      console.log('✅ Git commit completed');
-
-      // Use authenticated push with GitHub token if available
-      const githubToken = process.env.GITHUB_TOKEN;
-      const githubRepo = process.env.GITHUB_REPO || 'giriv11/rs999static';
-      
-      if (githubToken) {
-        const pushUrl = `https://${githubToken}@github.com/${githubRepo}.git`;
-        await execPromise(`git push ${pushUrl} main`);
-      } else {
-        await execPromise('git push origin main');
+      const indexContent = await githubGetFile('posts/index.json');
+      if (indexContent) {
+        indexData = JSON.parse(indexContent);
       }
-      console.log('✅ Git push completed');
-    } catch (gitError) {
-      console.error('⚠️ Git operation warning:', gitError.message);
-      // Continue even if git fails
+    } catch (error) {
+      console.log('📄 Creating new index.json');
     }
 
-    res.json({
-      success: true,
-      message: 'Post created and pushed to GitHub successfully',
-      post: postData,
-      indexEntry
-    });
+    // Check if post already exists
+    if (indexData.some(post => post.slug === slug)) {
+      return res.status(409).json({ error: 'Post with this slug already exists' });
+    }
+
+    // Add new post to beginning of array
+    indexData.unshift(indexEntry);
+
+    // Push to GitHub using API
+    try {
+      // 1. Create/update the blog post file
+      console.log(`📤 Uploading ${slug}.json to GitHub...`);
+      await githubUpdateFile(
+        `posts/${slug}.json`,
+        JSON.stringify(postData, null, 2),
+        `Add new blog post: ${title}`
+      );
+      console.log(`✅ Uploaded ${slug}.json`);
+
+      // 2. Update index.json
+      console.log(`📤 Updating index.json on GitHub...`);
+      await githubUpdateFile(
+        'posts/index.json',
+        JSON.stringify(indexData, null, 2),
+        `Update index.json with: ${title}`
+      );
+      console.log(`✅ Updated index.json on GitHub`);
+
+      res.json({
+        success: true,
+        message: 'Post created and pushed to GitHub successfully! Site will update in 30-60 seconds.',
+        post: postData,
+        indexEntry
+      });
+
+    } catch (githubError) {
+      console.error('❌ GitHub API error:', githubError.message);
+      res.status(500).json({ 
+        error: 'Failed to push to GitHub: ' + githubError.message,
+        details: 'Make sure GITHUB_TOKEN is configured correctly'
+      });
+    }
 
   } catch (error) {
     console.error('Error creating post:', error);
@@ -156,8 +239,14 @@ app.post('/api/posts', verifyPassword, async (req, res) => {
  */
 app.get('/api/posts', async (req, res) => {
   try {
-    const indexFilePath = path.join(__dirname, 'posts', 'index.json');
-    const indexContent = await fs.readFile(indexFilePath, 'utf8');
+    // Try GitHub API first, fallback to local
+    let indexContent;
+    if (GITHUB_TOKEN) {
+      indexContent = await githubGetFile('posts/index.json');
+    } else {
+      const indexFilePath = path.join(__dirname, 'posts', 'index.json');
+      indexContent = await fs.readFile(indexFilePath, 'utf8');
+    }
     const posts = JSON.parse(indexContent);
     res.json(posts);
   } catch (error) {
@@ -217,22 +306,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Admin server is running' });
 });
 
-// Configure git on startup (for DigitalOcean environment)
-async function configureGit() {
-  try {
-    await execPromise('git config user.email "admin@rs999.in"');
-    await execPromise('git config user.name "Rs999 Admin Bot"');
-    console.log('✅ Git configured successfully');
-  } catch (error) {
-    console.error('⚠️ Git configuration warning:', error.message);
-  }
-}
-
 // Start server
-app.listen(PORT, async () => {
-  // Configure git on startup
-  await configureGit();
-  
+app.listen(PORT, () => {
   console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║  🚀 Rs999 Admin Server Running                             ║

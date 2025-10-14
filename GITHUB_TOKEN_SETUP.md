@@ -2,7 +2,7 @@
 
 ## 🔑 Why You Need a GitHub Token
 
-Your API server needs permission to push blog post commits to your GitHub repository. Without it, git commits fail with authentication errors.
+Your API server uses GitHub's REST API to create and update blog post files directly in your repository. Without this token, the server cannot push changes to GitHub, and new blog posts won't appear on your website.
 
 ## 📝 Step-by-Step: Create GitHub Personal Access Token
 
