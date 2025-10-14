@@ -204,7 +204,7 @@ function loadFooter() {
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/918888589767?text=I'm%20inquiring%20about%20website%20designing" 
        target="_blank"
-       class="fixed bottom-6 right-6 bg-gradient-to-br from-green-500 to-green-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all duration-300 z-50 hover:scale-110 group">
+       class="fixed bottom-6 left-6 bg-gradient-to-br from-green-500 to-green-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all duration-300 z-50 hover:scale-110 group">
       <i class="fab fa-whatsapp text-3xl group-hover:scale-110 transition-transform relative z-10"></i>
       <div class="absolute inset-0 bg-white rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity"></div>
     </a>

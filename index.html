@@ -48,7 +48,7 @@
 
   
   <!-- Tailwind CSS -->
-    <link rel="stylesheet" href="assets/css/output.css?v=13">
+    <link rel="stylesheet" href="assets/css/output.css?v=16">
   
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -143,68 +143,68 @@
               </div>
 
               <form id="heroQuoteForm" class="space-y-3">
-                <!-- Name and Email Fields Inline -->
-                <div class="grid grid-cols-2 gap-3">
-                  <div class="relative">
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
-                      <i class="fas fa-user text-primary-600 text-xs"></i>
-                    </div>
-                    <input
-                      type="text"
-                      id="heroName"
-                      required
-                      class="w-full pl-12 pr-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 outline-none text-gray-900 text-sm"
-                      placeholder="Name *"
-                    />
+                <!-- Name Field -->
+                <div class="relative">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-primary-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-user text-primary-600 text-xs"></i>
                   </div>
-                  <div class="relative">
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center">
-                      <i class="fas fa-envelope text-secondary-600 text-xs"></i>
-                    </div>
-                    <input
-                      type="email"
-                      id="heroEmail"
-                      required
-                      class="w-full pl-12 pr-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-secondary-500 focus:ring-2 focus:ring-secondary-100 transition-all duration-300 outline-none text-gray-900 text-sm"
-                      placeholder="Email *"
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    id="heroName"
+                    required
+                    class="w-full pl-12 pr-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all duration-300 outline-none text-gray-900 text-sm"
+                    placeholder="Name *"
+                  />
                 </div>
 
-                <!-- Phone and Service Fields Inline -->
-                <div class="grid grid-cols-2 gap-3">
-                  <div class="relative">
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
-                      <i class="fas fa-phone text-green-600 text-xs"></i>
-                    </div>
-                    <input
-                      type="tel"
-                      id="heroPhone"
-                      required
-                      class="w-full pl-12 pr-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-300 outline-none text-gray-900 text-sm"
-                      placeholder="Phone *"
-                    />
+                <!-- Email Field -->
+                <div class="relative">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-secondary-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-envelope text-secondary-600 text-xs"></i>
                   </div>
-                  <div class="relative">
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center pointer-events-none z-10">
-                      <i class="fas fa-briefcase text-purple-600 text-xs"></i>
-                    </div>
-                    <select
-                      id="heroService"
-                      required
-                      class="w-full pl-12 pr-8 py-2.5 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition-all duration-300 outline-none text-gray-900 text-sm appearance-none bg-white"
-                    >
-                      <option value="">Service *</option>
-                      <option value="website-design">Website Design</option>
-                      <option value="ecommerce">E-commerce</option>
-                      <option value="wordpress">WordPress</option>
-                      <option value="seo">SEO</option>
-                      <option value="mobile-app">Mobile App</option>
-                      <option value="marketing">Marketing</option>
-                      <option value="other">Other</option>
-                    </select>
-                    <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
+                  <input
+                    type="email"
+                    id="heroEmail"
+                    required
+                    class="w-full pl-12 pr-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-secondary-500 focus:ring-2 focus:ring-secondary-100 transition-all duration-300 outline-none text-gray-900 text-sm"
+                    placeholder="Email *"
+                  />
+                </div>
+
+                <!-- Phone Field -->
+                <div class="relative">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-phone text-green-600 text-xs"></i>
                   </div>
+                  <input
+                    type="tel"
+                    id="heroPhone"
+                    required
+                    class="w-full pl-12 pr-3 py-2.5 rounded-lg border-2 border-gray-200 focus:border-green-500 focus:ring-2 focus:ring-green-100 transition-all duration-300 outline-none text-gray-900 text-sm"
+                    placeholder="Phone *"
+                  />
+                </div>
+
+                <!-- Service Field -->
+                <div class="relative">
+                  <div class="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center pointer-events-none z-10">
+                    <i class="fas fa-briefcase text-purple-600 text-xs"></i>
+                  </div>
+                  <select
+                    id="heroService"
+                    required
+                    class="w-full pl-12 pr-8 py-2.5 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:ring-2 focus:ring-purple-100 transition-all duration-300 outline-none text-gray-900 text-sm appearance-none bg-white"
+                  >
+                    <option value="">Service *</option>
+                    <option value="website-design">Website Design</option>
+                    <option value="ecommerce">E-commerce</option>
+                    <option value="wordpress">WordPress</option>
+                    <option value="seo">SEO</option>
+                    <option value="mobile-app">Mobile App</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="other">Other</option>
+                  </select>
+                  <i class="fas fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-xs"></i>
                 </div>
 
                 <!-- Message Field with Icon -->
@@ -244,8 +244,6 @@
                     <i class="fas fa-shield-alt text-blue-600"></i>
                     <span class="text-gray-700 font-semibold">Secure</span>
                   </div>
-                  
-                  
                 </div>
               </div>
             </div>
@@ -272,9 +270,57 @@
     <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary-200 rounded-full mix-blend-multiply filter blur-3xl opacity-20"></div>
     
     <div class="container mx-auto px-4 relative z-10">
-      <div class="text-center mb-12">
-        <h2 style="font-size: 2.25rem; line-height: 2.5rem;" class="font-black text-gray-900 mb-4">All-in-one Affordable Website Design Package</h2>
-        <p class="section-subheading">Everything you need to establish your online presence</p>
+      <!-- Modern Package Header -->
+      <div class="relative mb-16">
+        <!-- Background Decorations -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full pointer-events-none">
+          <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="text-center relative z-10">
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200/50 rounded-full px-4 py-2 mb-4">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+            </span>
+            <span class="text-sm font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent uppercase tracking-wide">Most Popular Package</span>
+          </div>
+          
+          <!-- Main Heading -->
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 leading-tight">
+            All-in-one 
+            <span class="relative inline-block mx-1">
+              <span class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400 blur-lg opacity-30"></span>
+              <span class="relative bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Affordable</span>
+            </span>
+            <br class="hidden sm:block">Website Design Package
+          </h2>
+          
+          <!-- Subheading -->
+          <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto mb-6">Everything you need to establish your online presence</p>
+          
+          <!-- Feature Pills -->
+          <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+            <div class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm hover:shadow-md transition-shadow">
+              <i class="fas fa-check-circle text-primary-500 text-sm"></i>
+              <span class="text-sm font-semibold text-gray-700">Quick Delivery</span>
+            </div>
+            <div class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm hover:shadow-md transition-shadow">
+              <i class="fas fa-check-circle text-primary-500 text-sm"></i>
+              <span class="text-sm font-semibold text-gray-700">Free Support</span>
+            </div>
+            <div class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm hover:shadow-md transition-shadow">
+              <i class="fas fa-check-circle text-primary-500 text-sm"></i>
+              <span class="text-sm font-semibold text-gray-700">100% Satisfaction</span>
+            </div>
+            <div class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 shadow-sm hover:shadow-md transition-shadow">
+              <i class="fas fa-check-circle text-primary-500 text-sm"></i>
+              <span class="text-sm font-semibold text-gray-700">Money Back Guarantee</span>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="max-w-5xl mx-auto">
@@ -450,7 +496,7 @@
   </section>
 
   <!-- Stats Section -->
-  <section class="py-24 relative overflow-hidden bg-gradient-to-br from-gray-900 via-primary-900 to-secondary-900">
+  <section class="py-16 relative overflow-hidden bg-gradient-to-br from-gray-900 via-primary-900 to-secondary-900">
     <!-- Animated Background Pattern -->
     <div class="absolute inset-0">
       <div class="absolute inset-0 bg-grid-pattern opacity-10"></div>
@@ -463,74 +509,74 @@
 
     <div class="container mx-auto px-4 relative z-10">
       <!-- Section Header -->
-      <div class="text-center mb-16">
-        <div class="inline-block mb-4">
-          <span class="bg-gradient-to-r from-primary-400 to-secondary-400 text-white px-6 py-2 rounded-full text-sm font-bold uppercase tracking-wider shadow-lg">Our Achievements</span>
+      <div class="text-center mb-10">
+        <div class="inline-block mb-3">
+          <span class="bg-gradient-to-r from-primary-400 to-secondary-400 text-white px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider shadow-lg">Our Achievements</span>
         </div>
-        <h2 class="text-4xl md:text-5xl font-black text-white mb-4">Proven Track Record</h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto">Numbers that speak for our excellence and commitment to delivering exceptional results</p>
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-3">Proven Track Record</h2>
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">Numbers that speak for our excellence and commitment</p>
       </div>
 
       <!-- Stats Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
         <!-- Stat 1 -->
         <div class="group relative">
-          <div class="absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-600 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
-          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl">
+          <div class="absolute inset-0 bg-gradient-to-r from-primary-500 to-primary-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-gradient-to-br from-primary-400 to-primary-600 rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
-                <i class="fas fa-rocket text-white text-2xl relative z-10"></i>
+              <div class="w-12 h-12 bg-gradient-to-br from-primary-400 to-primary-600 rounded-xl flex items-center justify-center mb-3 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
+                <i class="fas fa-rocket text-white text-lg relative z-10"></i>
               </div>
-              <div class="text-6xl md:text-7xl font-black text-white mb-3 bg-gradient-to-r from-white to-primary-200 bg-clip-text text-transparent">9000<span class="text-4xl">+</span></div>
-              <div class="text-gray-300 font-semibold text-lg text-center">Projects Delivered</div>
-              <div class="mt-3 h-1 w-16 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full"></div>
+              <div class="text-4xl md:text-5xl font-black text-white mb-2 bg-gradient-to-r from-white to-primary-200 bg-clip-text text-transparent">9000<span class="text-2xl">+</span></div>
+              <div class="text-gray-300 font-semibold text-sm text-center">Projects Delivered</div>
+              <div class="mt-2 h-0.5 w-12 bg-gradient-to-r from-primary-400 to-primary-600 rounded-full"></div>
             </div>
           </div>
         </div>
         
         <!-- Stat 2 -->
         <div class="group relative">
-          <div class="absolute inset-0 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
-          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl">
+          <div class="absolute inset-0 bg-gradient-to-r from-secondary-500 to-secondary-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
-                <i class="fas fa-users text-white text-2xl relative z-10"></i>
+              <div class="w-12 h-12 bg-gradient-to-br from-secondary-400 to-secondary-600 rounded-xl flex items-center justify-center mb-3 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
+                <i class="fas fa-users text-white text-lg relative z-10"></i>
               </div>
-              <div class="text-6xl md:text-7xl font-black text-white mb-3 bg-gradient-to-r from-white to-secondary-200 bg-clip-text text-transparent">500<span class="text-4xl">+</span></div>
-              <div class="text-gray-300 font-semibold text-lg text-center">Client Base</div>
-              <div class="mt-3 h-1 w-16 bg-gradient-to-r from-secondary-400 to-secondary-600 rounded-full"></div>
+              <div class="text-4xl md:text-5xl font-black text-white mb-2 bg-gradient-to-r from-white to-secondary-200 bg-clip-text text-transparent">500<span class="text-2xl">+</span></div>
+              <div class="text-gray-300 font-semibold text-sm text-center">Client Base</div>
+              <div class="mt-2 h-0.5 w-12 bg-gradient-to-r from-secondary-400 to-secondary-600 rounded-full"></div>
             </div>
           </div>
         </div>
         
         <!-- Stat 3 -->
         <div class="group relative">
-          <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-green-600 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
-          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl">
+          <div class="absolute inset-0 bg-gradient-to-r from-green-500 to-green-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-gradient-to-br from-green-400 to-green-600 rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
-                <i class="fas fa-award text-white text-2xl relative z-10"></i>
+              <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-green-600 rounded-xl flex items-center justify-center mb-3 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
+                <i class="fas fa-award text-white text-lg relative z-10"></i>
               </div>
-              <div class="text-6xl md:text-7xl font-black text-white mb-3 bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">14<span class="text-4xl">+</span></div>
-              <div class="text-gray-300 font-semibold text-lg text-center">Years Experience</div>
-              <div class="mt-3 h-1 w-16 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
+              <div class="text-4xl md:text-5xl font-black text-white mb-2 bg-gradient-to-r from-white to-green-200 bg-clip-text text-transparent">14<span class="text-2xl">+</span></div>
+              <div class="text-gray-300 font-semibold text-sm text-center">Years Experience</div>
+              <div class="mt-2 h-0.5 w-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full"></div>
             </div>
           </div>
         </div>
         
         <!-- Stat 4 -->
         <div class="group relative">
-          <div class="absolute inset-0 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-3xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
-          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-3xl p-8 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-2 hover:shadow-2xl">
+          <div class="absolute inset-0 bg-gradient-to-r from-yellow-500 to-orange-600 rounded-2xl blur-xl opacity-50 group-hover:opacity-75 transition-opacity duration-300"></div>
+          <div class="relative bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl rounded-2xl p-6 border border-white/20 hover:border-white/40 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-2xl">
             <div class="flex flex-col items-center">
-              <div class="w-16 h-16 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center mb-4 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
-                <i class="fas fa-star text-white text-2xl relative z-10"></i>
+              <div class="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-xl flex items-center justify-center mb-3 transform group-hover:scale-110 transition-transform duration-300 shadow-xl relative">
+                <i class="fas fa-star text-white text-lg relative z-10"></i>
               </div>
-              <div class="text-6xl md:text-7xl font-black text-white mb-3 bg-gradient-to-r from-white to-yellow-200 bg-clip-text text-transparent flex items-center gap-2">
-                4.5<i class="fas fa-star text-yellow-300 text-3xl"></i>
+              <div class="text-4xl md:text-5xl font-black text-white mb-2 bg-gradient-to-r from-white to-yellow-200 bg-clip-text text-transparent flex items-center gap-1">
+                4.5<i class="fas fa-star text-yellow-300 text-xl"></i>
               </div>
-              <div class="text-gray-300 font-semibold text-lg text-center">Customer Rating</div>
-              <div class="mt-3 h-1 w-16 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"></div>
+              <div class="text-gray-300 font-semibold text-sm text-center">Customer Rating</div>
+              <div class="mt-2 h-0.5 w-12 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full"></div>
             </div>
           </div>
         </div>
@@ -541,9 +587,36 @@
   <!-- Services Section -->
   <section class="py-20 bg-gradient-to-b from-white to-gray-50">
     <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 style="font-size: 2.25rem; line-height: 2.5rem;" class="font-black text-gray-900 mb-4">Our Services</h2>
-        <p class="text-lg text-gray-600 max-w-2xl mx-auto">Creating web solutions for everyone</p>
+      <!-- Modern Section Header -->
+      <div class="relative mb-16">
+        <!-- Background Decorations -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full pointer-events-none">
+          <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="text-center relative z-10">
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200/50 rounded-full px-4 py-2 mb-4">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+            </span>
+            <span class="text-sm font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent uppercase tracking-wide">What We Offer</span>
+          </div>
+          
+          <!-- Main Heading -->
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 leading-tight">
+            Our 
+            <span class="relative inline-block mx-1">
+              <span class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400 blur-lg opacity-30"></span>
+              <span class="relative bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Services</span>
+            </span>
+          </h2>
+          
+          <!-- Subheading -->
+          <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">Creating web solutions for everyone</p>
+        </div>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
@@ -601,16 +674,44 @@
   <!-- Recent Projects Section -->
   <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="section-heading">Recent Projects Showcase</h2>
-        <p class="section-subheading">Explore our latest achievements and innovations</p>
+      <!-- Modern Section Header -->
+      <div class="relative mb-16">
+        <!-- Background Decorations -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full pointer-events-none">
+          <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="text-center relative z-10">
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200/50 rounded-full px-4 py-2 mb-4">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+            </span>
+            <span class="text-sm font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent uppercase tracking-wide">Our Portfolio</span>
+          </div>
+          
+          <!-- Main Heading -->
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 leading-tight">
+            Recent 
+            <span class="relative inline-block mx-1">
+              <span class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400 blur-lg opacity-30"></span>
+              <span class="relative bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Projects</span>
+            </span>
+            Showcase
+          </h2>
+          
+          <!-- Subheading -->
+          <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">Explore our latest achievements and innovations</p>
+        </div>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
         <!-- Project 1 -->
         <div class="card overflow-hidden group">
           <div class="relative overflow-hidden h-64 bg-gradient-to-br from-primary-400 to-primary-600">
-            <img src="https://via.placeholder.com/400x300/3b82f6/ffffff?text=E-commerce+Website" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <img src="assets/images/client-Electricbikescootercar.co_.uk-rs999.avif" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a href="pages/portfolio.html" class="bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold">View Details</a>
             </div>
@@ -625,7 +726,7 @@
         <!-- Project 2 -->
         <div class="card overflow-hidden group">
           <div class="relative overflow-hidden h-64 bg-gradient-to-br from-green-400 to-green-600">
-            <img src="https://via.placeholder.com/400x300/10b981/ffffff?text=Business+Website" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <img src="assets/images/client-Nimboopaniadvertisers.com-rs999.avif" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a href="pages/portfolio.html" class="bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold">View Details</a>
             </div>
@@ -640,7 +741,7 @@
         <!-- Project 3 -->
         <div class="card overflow-hidden group">
           <div class="relative overflow-hidden h-64 bg-gradient-to-br from-orange-400 to-orange-600">
-            <img src="https://via.placeholder.com/400x300/f97316/ffffff?text=News+Website" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <img src="assets/images/client-Goakhabar.com-rs999.avif" alt="Project" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a href="pages/portfolio.html" class="bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold">View Details</a>
             </div>
@@ -666,10 +767,32 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div class="relative">
             <div class="absolute -inset-4 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-3xl opacity-20 blur-xl"></div>
-            <img src="https://via.placeholder.com/600x400/3b82f6/ffffff?text=About+Rs999" alt="About Rs999" class="relative rounded-2xl shadow-2xl">
+            <img src="assets/images/low-cost-website-design-1024x683-1.avif" alt="About Rs999" class="relative rounded-2xl shadow-2xl">
           </div>
           <div>
-            <h2 style="font-size: 2.25rem; line-height: 2.5rem;" class="font-black text-gray-900 mb-6">About Rs999 Web Services</h2>
+            <!-- Modern Section Header -->
+            <div class="relative mb-8">
+              <div class="text-left relative z-10">
+                <!-- Top Badge -->
+                <div class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200/50 rounded-full px-4 py-2 mb-4">
+                  <span class="relative flex h-2 w-2">
+                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+                    <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+                  </span>
+                  <span class="text-sm font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent uppercase tracking-wide">Who We Are</span>
+                </div>
+                
+                <!-- Main Heading -->
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 leading-tight">
+                  About 
+                  <span class="relative inline-block mx-1">
+                    <span class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400 blur-lg opacity-30"></span>
+                    <span class="relative bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Rs999</span>
+                  </span>
+                  <br class="hidden sm:block">Web Services
+                </h2>
+              </div>
+            </div>
             <div class="space-y-4 text-gray-700 leading-relaxed">
               <p class="text-lg">
                 Rs999 Web Services is a division of <strong class="text-primary-600">Jikut Technologies Pvt. Ltd.</strong>, a leading technology company based in Latur, Maharashtra, India. Our team of skilled designers, developers, and strategists is dedicated to crafting innovative and effective web solutions tailored to meet your unique business needs.
@@ -698,9 +821,36 @@
   <!-- Testimonials Section -->
   <section class="py-20 bg-gradient-to-b from-gray-50 to-white">
     <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="section-heading">Client Testimonials</h2>
-        <p class="section-subheading">What our clients say about us</p>
+      <!-- Modern Section Header -->
+      <div class="relative mb-16">
+        <!-- Background Decorations -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full pointer-events-none">
+          <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="text-center relative z-10">
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200/50 rounded-full px-4 py-2 mb-4">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+            </span>
+            <span class="text-sm font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent uppercase tracking-wide">Reviews</span>
+          </div>
+          
+          <!-- Main Heading -->
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 leading-tight">
+            Client 
+            <span class="relative inline-block mx-1">
+              <span class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400 blur-lg opacity-30"></span>
+              <span class="relative bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Testimonials</span>
+            </span>
+          </h2>
+          
+          <!-- Subheading -->
+          <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">What our clients say about us</p>
+        </div>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
@@ -785,9 +935,36 @@
   <!-- Blog Section -->
   <section class="py-20 bg-white">
     <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="section-heading">Rs999 Blog</h2>
-        <p class="section-subheading">Latest news and insights from our experts</p>
+      <!-- Modern Section Header -->
+      <div class="relative mb-16">
+        <!-- Background Decorations -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full pointer-events-none">
+          <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="text-center relative z-10">
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200/50 rounded-full px-4 py-2 mb-4">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+            </span>
+            <span class="text-sm font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent uppercase tracking-wide">Latest Updates</span>
+          </div>
+          
+          <!-- Main Heading -->
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 leading-tight">
+            <span class="relative inline-block mx-1">
+              <span class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400 blur-lg opacity-30"></span>
+              <span class="relative bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Rs999</span>
+            </span>
+            Blog
+          </h2>
+          
+          <!-- Subheading -->
+          <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">Latest news and insights from our experts</p>
+        </div>
       </div>
 
       <div class="grid md:grid-cols-3 gap-8">
@@ -864,9 +1041,36 @@
   <!-- FAQ Section -->
   <section class="py-20 bg-gray-50">
     <div class="container mx-auto px-4">
-      <div class="text-center mb-16">
-        <h2 class="section-heading">Frequently Asked Questions</h2>
-        <p class="section-subheading">Find answers to common questions</p>
+      <!-- Modern Section Header -->
+      <div class="relative mb-16">
+        <!-- Background Decorations -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-full pointer-events-none">
+          <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500/10 rounded-full blur-3xl"></div>
+          <div class="absolute top-0 right-0 w-32 h-32 bg-secondary-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div class="text-center relative z-10">
+          <!-- Top Badge -->
+          <div class="inline-flex items-center gap-2 bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200/50 rounded-full px-4 py-2 mb-4">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary-500"></span>
+            </span>
+            <span class="text-sm font-bold bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent uppercase tracking-wide">Got Questions?</span>
+          </div>
+          
+          <!-- Main Heading -->
+          <h2 class="text-3xl md:text-4xl lg:text-5xl font-black text-gray-900 mb-3 leading-tight">
+            Frequently Asked 
+            <span class="relative inline-block mx-1">
+              <span class="absolute inset-0 bg-gradient-to-r from-primary-400 to-secondary-400 blur-lg opacity-30"></span>
+              <span class="relative bg-gradient-to-r from-primary-600 to-secondary-600 bg-clip-text text-transparent">Questions</span>
+            </span>
+          </h2>
+          
+          <!-- Subheading -->
+          <p class="text-gray-600 text-lg md:text-xl max-w-2xl mx-auto">Find answers to common questions</p>
+        </div>
       </div>
 
       <div class="max-w-3xl mx-auto space-y-4">
