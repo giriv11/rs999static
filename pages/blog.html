@@ -141,10 +141,12 @@
   <script src="../assets/js/main.js"></script>
   
   <script>
-    // Pagination configuration
-    const POSTS_PER_PAGE = 6;
-    let allPosts = [];
-    let currentPage = 1;
+    // Blog Posts Loader - Version 2.0 - Fixed duplicate declaration
+    (function() {
+      // Pagination configuration
+      const POSTS_PER_PAGE = 6;
+      let allPosts = [];
+      let currentPage = 1;
     
     // Get page number from URL
     function getPageFromURL() {
@@ -355,12 +357,12 @@
     }
     
     // Navigate to a specific page
-    function goToPage(page) {
+    window.goToPage = function(page) {
       currentPage = page;
       updateURL(page);
       renderPage(page);
       renderPagination();
-    }
+    };
     
     // Handle browser back/forward
     window.addEventListener('popstate', function() {
@@ -371,6 +373,8 @@
     
     // Load posts when page loads
     document.addEventListener('DOMContentLoaded', loadBlogPosts);
+    
+    })(); // End of IIFE
   </script>
 </body>
 </html>
