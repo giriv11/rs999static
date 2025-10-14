@@ -121,7 +121,16 @@ app.post('/api/posts', verifyPassword, async (req, res) => {
       await execPromise(`git commit -m "Add new blog post: ${title}"`);
       console.log('✅ Git commit completed');
 
-      await execPromise('git push origin main');
+      // Use authenticated push with GitHub token if available
+      const githubToken = process.env.GITHUB_TOKEN;
+      const githubRepo = process.env.GITHUB_REPO || 'giriv11/rs999static';
+      
+      if (githubToken) {
+        const pushUrl = `https://${githubToken}@github.com/${githubRepo}.git`;
+        await execPromise(`git push ${pushUrl} main`);
+      } else {
+        await execPromise('git push origin main');
+      }
       console.log('✅ Git push completed');
     } catch (gitError) {
       console.error('⚠️ Git operation warning:', gitError.message);
@@ -208,8 +217,22 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Admin server is running' });
 });
 
+// Configure git on startup (for DigitalOcean environment)
+async function configureGit() {
+  try {
+    await execPromise('git config user.email "admin@rs999.in"');
+    await execPromise('git config user.name "Rs999 Admin Bot"');
+    console.log('✅ Git configured successfully');
+  } catch (error) {
+    console.error('⚠️ Git configuration warning:', error.message);
+  }
+}
+
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  // Configure git on startup
+  await configureGit();
+  
   console.log(`
 ╔════════════════════════════════════════════════════════════╗
 ║  🚀 Rs999 Admin Server Running                             ║

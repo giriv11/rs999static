@@ -35,6 +35,11 @@ spec:
         - key: ADMIN_PASSWORD
           value: Rs999Admin@2025
           type: SECRET
+        - key: GITHUB_TOKEN
+          value: YOUR_GITHUB_TOKEN_HERE
+          type: SECRET
+        - key: GITHUB_REPO
+          value: giriv11/rs999static
       
       http_port: 8080
       
