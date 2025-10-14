@@ -1,0 +1,22 @@
+[
+  {
+    "name": "website design",
+    "slug": "website-design",
+    "count": 3
+  },
+  {
+    "name": "seo",
+    "slug": "seo",
+    "count": 2
+  },
+  {
+    "name": "wordpress",
+    "slug": "wordpress",
+    "count": 1
+  },
+  {
+    "name": "ecommerce",
+    "slug": "ecommerce",
+    "count": 1
+  }
+]

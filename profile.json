@@ -1,0 +1,17 @@
+{
+  "name": "Rs999 Admin",
+  "email": "admin@rs999.in",
+  "bio": "Administrator of Rs999 Web Services blog. Managing content and website updates.",
+  "role": "Administrator",
+  "avatar": "",
+  "social": {
+    "twitter": "",
+    "linkedin": "",
+    "github": ""
+  },
+  "settings": {
+    "postsPerPage": 10,
+    "emailNotifications": true,
+    "theme": "light"
+  }
+}

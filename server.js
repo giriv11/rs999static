@@ -270,31 +270,407 @@ app.get('/api/posts/:slug', async (req, res) => {
 });
 
 /**
+ * API Endpoint: Update existing post
+ * PUT /api/posts/:slug
+ */
+app.put('/api/posts/:slug', verifyPassword, async (req, res) => {
+  try {
+    const { slug: oldSlug } = req.params;
+    const { title, slug, date, image, excerpt, content, category, tags, seo } = req.body;
+
+    // Create post JSON with enhanced fields
+    const postData = {
+      title,
+      slug,
+      excerpt,
+      content,
+      date,
+      image: image || '',
+      category: category || 'Uncategorized',
+      tags: tags || [],
+      seo: seo || {
+        metaTitle: title,
+        metaDescription: excerpt,
+        focusKeyword: '',
+        canonicalUrl: `https://rs999.in/post/${slug}`
+      }
+    };
+
+    console.log(`📝 Updating post: ${oldSlug} → ${slug}`);
+
+    // Get current index.json from GitHub
+    let indexData = [];
+    try {
+      const indexContent = await githubGetFile('posts/index.json');
+      if (indexContent) {
+        indexData = JSON.parse(indexContent);
+      }
+    } catch (error) {
+      console.log('📄 Index not found');
+    }
+
+    // Remove old entry
+    indexData = indexData.filter(post => post.slug !== oldSlug);
+
+    // Add updated entry
+    const indexEntry = {
+      slug,
+      title,
+      date,
+      excerpt,
+      image: image || '',
+      category: category || 'Uncategorized',
+      tags: tags || []
+    };
+    indexData.unshift(indexEntry);
+
+    // Push to GitHub using API
+    try {
+      // 1. Update/create the blog post file
+      console.log(`📤 Uploading ${slug}.json to GitHub...`);
+      await githubUpdateFile(
+        `posts/${slug}.json`,
+        JSON.stringify(postData, null, 2),
+        `Update blog post: ${title}`
+      );
+      console.log(`✅ Uploaded ${slug}.json`);
+
+      // 2. Delete old file if slug changed
+      if (oldSlug !== slug) {
+        console.log(`🗑️ Deleting old file: ${oldSlug}.json`);
+        try {
+          const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/posts/${oldSlug}.json`;
+          const getResponse = await fetch(url, {
+            headers: {
+              'Authorization': `token ${GITHUB_TOKEN}`,
+              'Accept': 'application/vnd.github.v3+json'
+            }
+          });
+          
+          if (getResponse.ok) {
+            const oldFile = await getResponse.json();
+            await fetch(url, {
+              method: 'DELETE',
+              headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json'
+              },
+              body: JSON.stringify({
+                message: `Delete old blog post: ${oldSlug}`,
+                sha: oldFile.sha,
+                branch: GITHUB_BRANCH
+              })
+            });
+          }
+        } catch (deleteError) {
+          console.log('⚠️ Could not delete old file:', deleteError.message);
+        }
+      }
+
+      // 3. Update index.json
+      console.log(`📤 Updating index.json on GitHub...`);
+      await githubUpdateFile(
+        'posts/index.json',
+        JSON.stringify(indexData, null, 2),
+        `Update index.json: ${title}`
+      );
+      console.log(`✅ Updated index.json on GitHub`);
+
+      res.json({
+        success: true,
+        message: 'Post updated successfully!',
+        post: postData,
+        indexEntry
+      });
+
+    } catch (githubError) {
+      console.error('❌ GitHub API error:', githubError.message);
+      res.status(500).json({ 
+        error: 'Failed to update on GitHub: ' + githubError.message 
+      });
+    }
+
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
  * API Endpoint: Delete post
  * DELETE /api/posts/:slug
  */
 app.delete('/api/posts/:slug', verifyPassword, async (req, res) => {
   try {
     const { slug } = req.params;
-    const postFilePath = path.join(__dirname, 'posts', `${slug}.json`);
-    const indexFilePath = path.join(__dirname, 'posts', 'index.json');
 
-    // Delete post file
-    await fs.unlink(postFilePath);
+    console.log(`🗑️ Deleting post: ${slug}`);
 
-    // Update index
-    const indexContent = await fs.readFile(indexFilePath, 'utf8');
-    let indexData = JSON.parse(indexContent);
+    // Get current index.json from GitHub
+    let indexData = [];
+    try {
+      const indexContent = await githubGetFile('posts/index.json');
+      if (indexContent) {
+        indexData = JSON.parse(indexContent);
+      }
+    } catch (error) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+
+    // Remove from index
     indexData = indexData.filter(post => post.slug !== slug);
-    await fs.writeFile(indexFilePath, JSON.stringify(indexData, null, 2));
 
-    // Git operations
-    await execPromise('git add posts/');
-    await execPromise(`git commit -m "Delete blog post: ${slug}"`);
-    await execPromise('git push origin main');
+    try {
+      // 1. Delete post file
+      const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/posts/${slug}.json`;
+      const getResponse = await fetch(url, {
+        headers: {
+          'Authorization': `token ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json'
+        }
+      });
+      
+      if (!getResponse.ok) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
 
-    res.json({ success: true, message: 'Post deleted successfully' });
+      const fileData = await getResponse.json();
+      
+      await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `token ${GITHUB_TOKEN}`,
+          'Accept': 'application/vnd.github.v3+json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          message: `Delete blog post: ${slug}`,
+          sha: fileData.sha,
+          branch: GITHUB_BRANCH
+        })
+      });
+      
+      console.log(`✅ Deleted ${slug}.json`);
+
+      // 2. Update index.json
+      await githubUpdateFile(
+        'posts/index.json',
+        JSON.stringify(indexData, null, 2),
+        `Update index after deleting: ${slug}`
+      );
+      console.log(`✅ Updated index.json`);
+
+      res.json({ success: true, message: 'Post deleted successfully' });
+
+    } catch (githubError) {
+      console.error('❌ GitHub API error:', githubError.message);
+      res.status(500).json({ error: 'Failed to delete from GitHub' });
+    }
+
   } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ============================================================================
+// CATEGORIES API
+// ============================================================================
+
+/**
+ * Get all categories
+ */
+app.get('/api/categories', async (req, res) => {
+  try {
+    const content = await githubGetFile('categories.json');
+    const categories = content ? JSON.parse(content) : [];
+    res.json(categories);
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    res.json([]);
+  }
+});
+
+/**
+ * Create new category
+ */
+app.post('/api/categories', verifyPassword, async (req, res) => {
+  try {
+    const { name, slug } = req.body;
+
+    // Get existing categories
+    let categories = [];
+    try {
+      const content = await githubGetFile('categories.json');
+      categories = content ? JSON.parse(content) : [];
+    } catch (error) {
+      console.log('Creating new categories.json');
+    }
+
+    // Check if exists
+    if (categories.some(cat => cat.slug === slug)) {
+      return res.status(409).json({ error: 'Category already exists' });
+    }
+
+    // Add new category
+    const newCategory = {
+      id: categories.length + 1,
+      name,
+      slug,
+      count: 0
+    };
+    categories.push(newCategory);
+
+    // Save to GitHub
+    await githubUpdateFile(
+      'categories.json',
+      JSON.stringify(categories, null, 2),
+      `Add category: ${name}`
+    );
+
+    res.json({ success: true, category: newCategory });
+  } catch (error) {
+    console.error('Error creating category:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+/**
+ * Delete category
+ */
+app.delete('/api/categories/:slug', verifyPassword, async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    // Get existing categories
+    let categories = [];
+    try {
+      const content = await githubGetFile('categories.json');
+      categories = content ? JSON.parse(content) : [];
+    } catch (error) {
+      return res.status(404).json({ error: 'Categories not found' });
+    }
+
+    // Remove category
+    categories = categories.filter(cat => cat.slug !== slug);
+
+    // Save to GitHub
+    await githubUpdateFile(
+      'categories.json',
+      JSON.stringify(categories, null, 2),
+      `Delete category: ${slug}`
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting category:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ============================================================================
+// TAGS API
+// ============================================================================
+
+/**
+ * Get all tags
+ */
+app.get('/api/tags', async (req, res) => {
+  try {
+    const content = await githubGetFile('tags.json');
+    const tags = content ? JSON.parse(content) : [];
+    res.json(tags);
+  } catch (error) {
+    console.error('Error fetching tags:', error);
+    res.json([]);
+  }
+});
+
+/**
+ * Delete tag
+ */
+app.delete('/api/tags/:name', verifyPassword, async (req, res) => {
+  try {
+    const { name } = req.params;
+
+    // Get existing tags
+    let tags = [];
+    try {
+      const content = await githubGetFile('tags.json');
+      tags = content ? JSON.parse(content) : [];
+    } catch (error) {
+      return res.status(404).json({ error: 'Tags not found' });
+    }
+
+    // Remove tag
+    tags = tags.filter(tag => tag.name !== name);
+
+    // Save to GitHub
+    await githubUpdateFile(
+      'tags.json',
+      JSON.stringify(tags, null, 2),
+      `Delete tag: ${name}`
+    );
+
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting tag:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// ============================================================================
+// PROFILE API
+// ============================================================================
+
+/**
+ * Get profile
+ */
+app.get('/api/profile', async (req, res) => {
+  try {
+    const content = await githubGetFile('profile.json');
+    const profile = content ? JSON.parse(content) : {};
+    res.json(profile);
+  } catch (error) {
+    console.error('Error fetching profile:', error);
+    res.json({});
+  }
+});
+
+/**
+ * Update profile
+ */
+app.put('/api/profile', verifyPassword, async (req, res) => {
+  try {
+    const { name, email, bio, password } = req.body;
+
+    // Get existing profile
+    let profile = {};
+    try {
+      const content = await githubGetFile('profile.json');
+      profile = content ? JSON.parse(content) : {};
+    } catch (error) {
+      console.log('Creating new profile.json');
+    }
+
+    // Update profile
+    profile.name = name;
+    profile.email = email;
+    profile.bio = bio;
+
+    // Note: Password change would require updating environment variable
+    // For now, just save profile data
+
+    // Save to GitHub
+    await githubUpdateFile(
+      'profile.json',
+      JSON.stringify(profile, null, 2),
+      'Update admin profile'
+    );
+
+    res.json({ success: true, profile });
+  } catch (error) {
+    console.error('Error updating profile:', error);
     res.status(500).json({ error: error.message });
   }
 });
