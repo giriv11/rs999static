@@ -211,8 +211,8 @@
               type="submit"
               class="flex-1 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold py-4 px-6 rounded-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
             >
-              <i class="fas fa-download mr-2"></i>
-              Generate & Download JSON Files
+              <i class="fas fa-rocket mr-2"></i>
+              Publish Post to GitHub
             </button>
             <button
               type="button"
@@ -240,27 +240,33 @@
       <!-- Instructions -->
       <div class="bg-gradient-to-r from-primary-50 to-secondary-50 border border-primary-200 rounded-2xl p-6 mt-6">
         <h3 class="font-bold text-gray-900 mb-3 flex items-center">
-          <i class="fas fa-info-circle text-primary-600 mr-2"></i>
-          Next Steps After Downloading
+          <i class="fas fa-rocket text-primary-600 mr-2"></i>
+          Automated Workflow
         </h3>
-        <ol class="space-y-2 text-sm text-gray-700">
-          <li class="flex items-start">
-            <span class="font-bold text-primary-600 mr-2">1.</span>
-            <span>Save both downloaded JSON files to your local project's <code class="bg-white px-2 py-0.5 rounded">posts/</code> folder</span>
-          </li>
-          <li class="flex items-start">
-            <span class="font-bold text-primary-600 mr-2">2.</span>
-            <span>Update <code class="bg-white px-2 py-0.5 rounded">posts/index.json</code> by merging the new post data</span>
-          </li>
-          <li class="flex items-start">
-            <span class="font-bold text-primary-600 mr-2">3.</span>
-            <span>Commit changes: <code class="bg-white px-2 py-0.5 rounded text-xs">git add . && git commit -m "Add new blog post" && git push</code></span>
-          </li>
-          <li class="flex items-start">
-            <span class="font-bold text-primary-600 mr-2">4.</span>
-            <span>Deploy via My20i: Pull latest > Deploy HEAD Commit</span>
-          </li>
-        </ol>
+        <div class="space-y-3 text-sm text-gray-700">
+          <p class="flex items-start">
+            <i class="fas fa-check-circle text-green-600 mr-2 mt-0.5"></i>
+            <span>Posts are <strong>automatically saved</strong> to the <code class="bg-white px-2 py-0.5 rounded">posts/</code> folder</span>
+          </p>
+          <p class="flex items-start">
+            <i class="fas fa-check-circle text-green-600 mr-2 mt-0.5"></i>
+            <span>The <code class="bg-white px-2 py-0.5 rounded">posts/index.json</code> is <strong>automatically updated</strong></span>
+          </p>
+          <p class="flex items-start">
+            <i class="fas fa-check-circle text-green-600 mr-2 mt-0.5"></i>
+            <span>Changes are <strong>automatically committed and pushed</strong> to GitHub</span>
+          </p>
+          <p class="flex items-start bg-white rounded-lg p-3 mt-3">
+            <i class="fas fa-info-circle text-blue-600 mr-2 mt-0.5"></i>
+            <span><strong>Final Step:</strong> Deploy via My20i dashboard: <br><code class="text-xs">Git > Pull Latest > Deploy HEAD Commit</code></span>
+          </p>
+          <div class="bg-yellow-50 border-l-4 border-yellow-400 p-3 mt-3 rounded">
+            <p class="flex items-start text-yellow-800">
+              <i class="fas fa-exclamation-triangle text-yellow-600 mr-2 mt-0.5"></i>
+              <span><strong>Important:</strong> Make sure the admin server is running: <code class="bg-white px-2 py-0.5 rounded text-xs">node server.js</code></span>
+            </p>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -325,9 +331,19 @@
       document.getElementById('excerptCount').textContent = `${e.target.value.length}/150`;
     });
 
+    // API Configuration
+    const API_URL = 'http://localhost:3001/api';
+    
     // Form Submission Handler
-    document.getElementById('blogForm').addEventListener('submit', function(e) {
+    document.getElementById('blogForm').addEventListener('submit', async function(e) {
       e.preventDefault();
+      
+      const submitButton = e.target.querySelector('button[type="submit"]');
+      const originalText = submitButton.innerHTML;
+      
+      // Disable button and show loading
+      submitButton.disabled = true;
+      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creating Post...';
       
       const formData = {
         title: document.getElementById('title').value.trim(),
@@ -339,62 +355,50 @@
         category: document.getElementById('category').value.trim() || 'Uncategorized'
       };
 
-      // Generate post JSON
-      const postJSON = {
-        title: formData.title,
-        slug: formData.slug,
-        excerpt: formData.excerpt,
-        content: formData.content,
-        date: formData.date,
-        image: formData.image,
-        category: formData.category
-      };
+      try {
+        // Send to server API
+        const response = await fetch(`${API_URL}/posts`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${ADMIN_PASSWORD}`
+          },
+          body: JSON.stringify(formData)
+        });
 
-      // Generate index entry
-      const indexEntry = {
-        slug: formData.slug,
-        title: formData.title,
-        date: formData.date,
-        excerpt: formData.excerpt,
-        image: formData.image,
-        category: formData.category
-      };
+        const result = await response.json();
 
-      // Download post JSON
-      downloadJSON(postJSON, `${formData.slug}.json`);
-      
-      // Download index entry JSON
-      setTimeout(() => {
-        downloadJSON([indexEntry], `index-update-${formData.slug}.json`);
-      }, 500);
-
-      // Show success message
-      const successMessage = document.getElementById('successMessage');
-      successMessage.classList.remove('hidden');
-      setTimeout(() => {
-        successMessage.classList.add('hidden');
-      }, 5000);
-
-      // Optional: Reset form after submission
-      setTimeout(() => {
-        if (confirm('Files downloaded! Reset form for new post?')) {
-          resetForm();
+        if (!response.ok) {
+          throw new Error(result.error || 'Failed to create post');
         }
-      }, 1000);
-    });
 
-    // Download JSON Helper Function
-    function downloadJSON(data, filename) {
-      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }
+        // Show success message
+        const successMessage = document.getElementById('successMessage');
+        successMessage.classList.remove('hidden');
+        successMessage.querySelector('p:last-child').textContent = 
+          'Post created and pushed to GitHub successfully! 🎉';
+        
+        setTimeout(() => {
+          successMessage.classList.add('hidden');
+        }, 5000);
+
+        // Reset form
+        setTimeout(() => {
+          if (confirm('Post published successfully! Create another post?')) {
+            resetForm();
+          }
+        }, 1000);
+
+      } catch (error) {
+        // Show error message
+        alert('Error: ' + error.message + '\n\nMake sure the admin server is running:\nnode server.js');
+        console.error('Error creating post:', error);
+      } finally {
+        // Re-enable button
+        submitButton.disabled = false;
+        submitButton.innerHTML = originalText;
+      }
+    });
 
     // Reset Form Function
     function resetForm() {

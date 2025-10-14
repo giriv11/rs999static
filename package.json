@@ -5,12 +5,21 @@
   "scripts": {
     "build-css": "tailwindcss -i ./src/input.css -o ./assets/css/output.css --minify",
     "watch-css": "tailwindcss -i ./src/input.css -o ./assets/css/output.css --watch",
-    "dev": "npm run watch-css"
+    "dev": "npm run watch-css",
+    "server": "node server.js",
+    "admin": "node server.js"
   },
-  "keywords": ["tailwind", "static-site", "web-design"],
+  "keywords": [
+    "tailwind",
+    "static-site",
+    "web-design"
+  ],
   "author": "Rs999 Web Services",
   "license": "MIT",
   "devDependencies": {
     "tailwindcss": "^3.4.1"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
   }
 }
