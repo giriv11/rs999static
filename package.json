@@ -1,0 +1,16 @@
+{
+  "name": "rs999-static-site",
+  "version": "1.0.0",
+  "description": "Rs999 Web Services - Static Site with Tailwind CSS",
+  "scripts": {
+    "build-css": "tailwindcss -i ./src/input.css -o ./assets/css/output.css --minify",
+    "watch-css": "tailwindcss -i ./src/input.css -o ./assets/css/output.css --watch",
+    "dev": "npm run watch-css"
+  },
+  "keywords": ["tailwind", "static-site", "web-design"],
+  "author": "Rs999 Web Services",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1"
+  }
+}

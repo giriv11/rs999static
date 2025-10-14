@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Blog Post">
+  <title id="post-title">Blog Post | Rs999 Web Services</title>
+  
+  <link href="../assets/css/output.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
+</head>
+<body class="bg-gray-50">
+
+  <div id="header"></div>
+
+  <!-- Blog Post Content -->
+  <article class="py-20">
+    <div class="container mx-auto px-4 max-w-4xl">
+      <!-- Loading State -->
+      <div id="loading" class="text-center py-20">
+        <div class="inline-block animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-primary-600"></div>
+        <p class="mt-4 text-gray-600">Loading post...</p>
+      </div>
+
+      <!-- Post Content -->
+      <div id="post-content" class="hidden">
+        <div class="mb-8">
+          <a href="../pages/blog.html" class="text-primary-600 hover:text-primary-700 font-semibold inline-flex items-center">
+            <i class="fas fa-arrow-left mr-2"></i> Back to Blog
+          </a>
+        </div>
+
+        <div class="card p-8 md:p-12">
+          <div id="post-category" class="inline-block bg-primary-100 text-primary-700 px-4 py-1 rounded-full text-sm font-semibold mb-4"></div>
+          
+          <h1 id="post-heading" class="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6 leading-tight"></h1>
+          
+          <div class="flex items-center text-gray-600 mb-8 space-x-4">
+            <div class="flex items-center">
+              <i class="far fa-calendar mr-2"></i>
+              <span id="post-date"></span>
+            </div>
+            <div class="flex items-center">
+              <i class="far fa-user mr-2"></i>
+              <span>Rs999 Team</span>
+            </div>
+          </div>
+
+          <img id="post-image" src="" alt="" class="w-full h-96 object-cover rounded-xl mb-8 shadow-xl">
+
+          <div id="post-body" class="prose prose-lg max-w-none">
+            <!-- Post content will be loaded here -->
+          </div>
+
+          <!-- Share Buttons -->
+          <div class="mt-12 pt-8 border-t border-gray-200">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Share this post</h3>
+            <div class="flex space-x-4">
+              <a href="#" class="btn-secondary py-3 px-6 text-sm" onclick="shareOnFacebook(); return false;">
+                <i class="fab fa-facebook-f mr-2"></i> Facebook
+              </a>
+              <a href="#" class="btn-secondary py-3 px-6 text-sm" onclick="shareOnTwitter(); return false;">
+                <i class="fab fa-twitter mr-2"></i> Twitter
+              </a>
+              <a href="#" class="btn-secondary py-3 px-6 text-sm" onclick="shareOnLinkedIn(); return false;">
+                <i class="fab fa-linkedin-in mr-2"></i> LinkedIn
+              </a>
+              <a href="#" class="btn-secondary py-3 px-6 text-sm" onclick="shareOnWhatsApp(); return false;">
+                <i class="fab fa-whatsapp mr-2"></i> WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-12 card p-8 bg-gradient-to-r from-primary-600 to-purple-600 text-white text-center">
+          <h3 class="text-3xl font-bold mb-4">Ready to Start Your Project?</h3>
+          <p class="text-xl mb-6 text-white text-opacity-90">Let's create an amazing website for your business</p>
+          <a href="../pages/contact.html" class="btn-primary bg-white text-primary-600 hover:bg-gray-100">
+            <i class="fas fa-rocket mr-2"></i> Get Started Today
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+
+  <div id="footer"></div>
+
+  <script src="../assets/js/header.js"></script>
+  <script src="../assets/js/footer.js"></script>
+  <script src="../assets/js/main.js"></script>
+  <script>
+    // Get slug from URL parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const slug = urlParams.get('slug');
+
+    if (slug) {
+      // Fetch post data
+      fetch(`../posts/${slug}.json`)
+        .then(response => {
+          if (!response.ok) throw new Error('Post not found');
+          return response.json();
+        })
+        .then(post => {
+          // Update page title
+          document.getElementById('post-title').textContent = post.title + ' | Rs999 Web Services';
+          document.querySelector('meta[name="description"]').setAttribute('content', post.excerpt);
+
+          // Update content
+          document.getElementById('post-heading').textContent = post.title;
+          document.getElementById('post-date').textContent = new Date(post.date).toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          });
+          document.getElementById('post-category').textContent = post.category;
+          document.getElementById('post-image').src = post.image;
+          document.getElementById('post-image').alt = post.title;
+          
+          // Sanitize and insert content
+          const cleanContent = DOMPurify.sanitize(post.content);
+          document.getElementById('post-body').innerHTML = cleanContent;
+
+          // Show content, hide loading
+          document.getElementById('loading').classList.add('hidden');
+          document.getElementById('post-content').classList.remove('hidden');
+        })
+        .catch(error => {
+          document.getElementById('loading').innerHTML = `
+            <div class="text-center py-20">
+              <i class="fas fa-exclamation-circle text-6xl text-red-500 mb-4"></i>
+              <h2 class="text-2xl font-bold text-gray-800 mb-2">Post Not Found</h2>
+              <p class="text-gray-600 mb-6">The blog post you're looking for doesn't exist.</p>
+              <a href="../pages/blog.html" class="btn-primary">Back to Blog</a>
+            </div>
+          `;
+        });
+    } else {
+      window.location.href = '../pages/blog.html';
+    }
+
+    // Share functions
+    function shareOnFacebook() {
+      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareOnTwitter() {
+      const title = document.getElementById('post-heading').textContent;
+      window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareOnLinkedIn() {
+      window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(window.location.href)}`, '_blank');
+    }
+
+    function shareOnWhatsApp() {
+      const title = document.getElementById('post-heading').textContent;
+      window.open(`https://wa.me/?text=${encodeURIComponent(title + ' ' + window.location.href)}`, '_blank');
+    }
+  </script>
+
+  <style>
+    .prose h2 {
+      @apply text-3xl font-bold text-gray-900 mt-8 mb-4;
+    }
+    .prose h3 {
+      @apply text-2xl font-bold text-gray-900 mt-6 mb-3;
+    }
+    .prose p {
+      @apply text-gray-700 leading-relaxed mb-4;
+    }
+    .prose ul, .prose ol {
+      @apply my-4 ml-6;
+    }
+    .prose li {
+      @apply text-gray-700 mb-2;
+    }
+    .prose ul li {
+      @apply list-disc;
+    }
+    .prose ol li {
+      @apply list-decimal;
+    }
+    .prose strong {
+      @apply font-bold text-gray-900;
+    }
+  </style>
+</body>
+</html>
