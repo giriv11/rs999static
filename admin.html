@@ -331,8 +331,10 @@
       document.getElementById('excerptCount').textContent = `${e.target.value.length}/150`;
     });
 
-    // API Configuration
-    const API_URL = 'http://localhost:3001/api';
+    // API Configuration - Automatically detects environment
+    const API_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+      ? 'http://localhost:3001/api'  // Local development
+      : 'https://rs999-admin-api.ondigitalocean.app/api';  // Production (update after deployment)
     
     // Form Submission Handler
     document.getElementById('blogForm').addEventListener('submit', async function(e) {

@@ -1,7 +1,8 @@
 spec:
-  name: rs999-static-site
+  name: rs999-complete-app
   region: nyc
   
+  # Static Website - Hosts HTML/CSS/JS
   static_sites:
     - name: rs999-website
       github:
@@ -13,6 +14,43 @@ spec:
       output_dir: /
       catchall_document: index.html
       error_document: 404.html
+  
+  # Admin API Server - Handles Blog Creation
+  services:
+    - name: rs999-admin-api
+      github:
+        repo: giriv11/rs999static
+        branch: main
+        deploy_on_push: true
+      
+      source_dir: /
+      
+      run_command: node server.js
+      
+      envs:
+        - key: NODE_ENV
+          value: production
+        - key: PORT
+          value: "8080"
+        - key: ADMIN_PASSWORD
+          value: Rs999Admin@2025
+          type: SECRET
+      
+      http_port: 8080
+      
+      instance_count: 1
+      instance_size_slug: basic-xxs
+      
+      routes:
+        - path: /api
+      
+      health_check:
+        http_path: /api/health
+        initial_delay_seconds: 30
+        period_seconds: 10
+        timeout_seconds: 5
+        success_threshold: 1
+        failure_threshold: 3
   
   alerts:
     - rule: DEPLOYMENT_FAILED
