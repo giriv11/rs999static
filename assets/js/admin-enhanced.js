@@ -62,9 +62,14 @@ function showTab(tabName) {
   // Show selected tab
   document.getElementById(tabName + '-tab').classList.add('active');
   
-  // Highlight active button
-  event.target.closest('.tab-btn').classList.add('bg-primary-50', 'text-primary-700');
-  event.target.closest('.tab-btn').classList.remove('text-gray-700');
+  // Highlight active button - find by onclick attribute
+  const activeBtn = Array.from(document.querySelectorAll('.tab-btn')).find(
+    btn => btn.getAttribute('onclick') === `showTab('${tabName}')`
+  );
+  if (activeBtn) {
+    activeBtn.classList.add('bg-primary-50', 'text-primary-700');
+    activeBtn.classList.remove('text-gray-700');
+  }
   
   // Load data for specific tabs
   switch(tabName) {
@@ -217,9 +222,10 @@ document.getElementById('image-upload').addEventListener('change', async functio
     return;
   }
   
-  // Validate file size (max 5MB)
-  if (file.size > 5 * 1024 * 1024) {
-    showNotification('Image size should be less than 5MB', 'error');
+  // Validate file size (max 1MB for GitHub API)
+  if (file.size > 1 * 1024 * 1024) {
+    showNotification('Image size must be less than 1MB. Please compress or resize your image, or use an external image URL.', 'error');
+    e.target.value = ''; // Clear the file input
     return;
   }
   
