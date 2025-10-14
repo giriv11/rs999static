@@ -164,8 +164,17 @@
       try {
         // Add cache-busting parameter to ensure fresh data
         const cacheBuster = Date.now();
+        console.log('🔍 Fetching posts from:', `../posts/index.json?t=${cacheBuster}`);
+        
         const response = await fetch(`../posts/index.json?t=${cacheBuster}`);
+        console.log('📡 Response status:', response.status);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
         allPosts = await response.json();
+        console.log('📦 Posts received:', allPosts);
         
         // Update debug info
         document.getElementById('posts-count').textContent = allPosts.length;
@@ -185,9 +194,19 @@
         console.log(`✅ Loaded ${allPosts.length} blog posts at ${new Date().toLocaleTimeString()}`);
         
       } catch (error) {
-        console.error('Error loading blog posts:', error);
+        console.error('❌ Error loading blog posts:', error);
+        document.getElementById('posts-count').textContent = 'Error!';
+        document.getElementById('last-updated').textContent = 'Failed';
         document.querySelector('.lg\\:col-span-2 .space-y-8').innerHTML = 
-          '<p class="text-center text-red-600 py-12">Error loading blog posts. Please try again later.</p>';
+          `<div class="text-center text-red-600 py-12">
+            <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+            <p class="font-bold mb-2">Error loading blog posts</p>
+            <p class="text-sm text-gray-600">${error.message}</p>
+            <p class="text-sm text-gray-600 mt-2">Check browser console (F12) for details</p>
+            <button onclick="location.reload()" class="mt-4 px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700">
+              Try Again
+            </button>
+          </div>`;
       }
     }
     
