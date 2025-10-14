@@ -104,9 +104,33 @@
           return response.json();
         })
         .then(post => {
-          // Update page title
-          document.getElementById('post-title').textContent = post.title + ' | Rs999 Web Services';
-          document.querySelector('meta[name="description"]').setAttribute('content', post.excerpt);
+          // Update SEO meta tags
+          const seo = post.seo || {};
+          const metaTitle = seo.metaTitle || post.title;
+          const metaDescription = seo.metaDescription || post.excerpt;
+          
+          document.getElementById('post-title').textContent = metaTitle + ' | Rs999 Web Services';
+          document.querySelector('meta[name="description"]').setAttribute('content', metaDescription);
+          
+          // Add Open Graph tags if not present
+          if (!document.querySelector('meta[property="og:title"]')) {
+            const ogTitle = document.createElement('meta');
+            ogTitle.setAttribute('property', 'og:title');
+            ogTitle.setAttribute('content', metaTitle);
+            document.head.appendChild(ogTitle);
+            
+            const ogDescription = document.createElement('meta');
+            ogDescription.setAttribute('property', 'og:description');
+            ogDescription.setAttribute('content', metaDescription);
+            document.head.appendChild(ogDescription);
+            
+            if (post.image) {
+              const ogImage = document.createElement('meta');
+              ogImage.setAttribute('property', 'og:image');
+              ogImage.setAttribute('content', post.image);
+              document.head.appendChild(ogImage);
+            }
+          }
 
           // Update content
           document.getElementById('post-heading').textContent = post.title;
@@ -116,16 +140,74 @@
             day: 'numeric'
           });
           document.getElementById('post-category').textContent = post.category;
-          document.getElementById('post-image').src = post.image;
-          document.getElementById('post-image').alt = post.title;
+          
+          // Update featured image
+          const postImage = document.getElementById('post-image');
+          if (post.image && post.image.trim() !== '') {
+            postImage.src = post.image;
+            postImage.alt = post.title;
+            postImage.classList.remove('hidden');
+          } else {
+            postImage.classList.add('hidden');
+          }
           
           // Sanitize and insert content
           const cleanContent = DOMPurify.sanitize(post.content);
           document.getElementById('post-body').innerHTML = cleanContent;
+          
+          // Add Schema.org structured data for SEO
+          const schema = {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            "headline": post.title,
+            "description": post.excerpt,
+            "datePublished": post.date,
+            "dateModified": post.date,
+            "author": {
+              "@type": "Organization",
+              "name": "Rs999 Web Services"
+            },
+            "publisher": {
+              "@type": "Organization",
+              "name": "Rs999 Web Services",
+              "logo": {
+                "@type": "ImageObject",
+                "url": "https://rs999.in/assets/images/logo.png"
+              }
+            }
+          };
+          
+          if (post.image && post.image.trim() !== '') {
+            schema.image = post.image;
+          }
+          
+          if (post.category) {
+            schema.articleSection = post.category;
+          }
+          
+          if (post.tags && post.tags.length > 0) {
+            schema.keywords = post.tags.join(', ');
+          }
+          
+          // Add canonical URL from SEO
+          if (seo.canonicalUrl) {
+            const canonical = document.createElement('link');
+            canonical.rel = 'canonical';
+            canonical.href = seo.canonicalUrl;
+            document.head.appendChild(canonical);
+          }
+          
+          // Insert schema script tag
+          const schemaScript = document.createElement('script');
+          schemaScript.type = 'application/ld+json';
+          schemaScript.textContent = JSON.stringify(schema, null, 2);
+          document.head.appendChild(schemaScript);
 
           // Show content, hide loading
           document.getElementById('loading').classList.add('hidden');
           document.getElementById('post-content').classList.remove('hidden');
+          
+          console.log('✅ Post loaded with SEO and Schema.org data');
         })
         .catch(error => {
           document.getElementById('loading').innerHTML = `
