@@ -236,9 +236,32 @@ function loadFooter() {
   });
 }
 
+// Tawk.to Chat Widget - Delayed Load for Performance
+function loadTawkTo() {
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      var Tawk_API = Tawk_API || {};
+      Tawk_API.visitor = JSON.parse("{\"name\":\"Rs999 Web Services Team\",\"email\":\"info@rs999.in\"}");
+      var Tawk_LoadStart = new Date();
+      (function(){
+        var s1 = document.createElement('script'), s0 = document.getElementsByTagName('script')[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/687a0e7386520d191450085b/1j0ecrtbf';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    }, 2000); // Load after 2 seconds for better performance
+  });
+}
+
 // Load footer when DOM is ready
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', loadFooter);
+  document.addEventListener('DOMContentLoaded', function() {
+    loadFooter();
+    loadTawkTo();
+  });
 } else {
   loadFooter();
+  loadTawkTo();
 }
