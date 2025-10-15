@@ -47,7 +47,7 @@ const SITE_CONFIG = {
   // Website URLs
   urls: {
     main: "https://www.rs999.in",
-    blog: "https://www.rs999.in/pages/blog.html",
+    blog: "https://www.rs999.in/page/blog.html",
     cdn: "https://www.rs999.in" // For images and assets
   },
 

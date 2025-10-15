@@ -28,23 +28,23 @@ function loadHeader() {
               Home
               <span class="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 group-hover:w-full transition-all rounded-full"></span>
             </a>
-            <a href="/pages/services.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
+            <a href="/page/services.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
               Services
               <span class="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 group-hover:w-full transition-all rounded-full"></span>
             </a>
-            <a href="/pages/portfolio.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
+            <a href="/page/portfolio.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
               Portfolio
               <span class="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 group-hover:w-full transition-all rounded-full"></span>
             </a>
-            <a href="/pages/blog.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
+            <a href="/page/blog.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
               Blog
               <span class="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 group-hover:w-full transition-all rounded-full"></span>
             </a>
-            <a href="/pages/about.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
+            <a href="/page/about.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
               About
               <span class="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 group-hover:w-full transition-all rounded-full"></span>
             </a>
-            <a href="/pages/contact.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
+            <a href="/page/contact.html" class="text-gray-700 hover:text-primary-600 font-bold text-base transition-all relative group">
               Contact
               <span class="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary-500 to-secondary-500 group-hover:w-full transition-all rounded-full"></span>
             </a>
@@ -56,7 +56,7 @@ function loadHeader() {
               <i class="fas fa-phone"></i>
               <span>Call Now</span>
             </a>
-            <a href="/pages/contact.html" class="px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-full hover:shadow-2xl transition-all transform hover:scale-105 flex items-center space-x-2">
+            <a href="/page/contact.html" class="px-6 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-full hover:shadow-2xl transition-all transform hover:scale-105 flex items-center space-x-2">
               <i class="fas fa-rocket"></i>
               <span>Get Started</span>
             </a>
@@ -74,12 +74,12 @@ function loadHeader() {
         <div id="mobile-menu" class="hidden lg:hidden pb-4">
           <div class="flex flex-col space-y-2">
             <a href="/index.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Home</a>
-            <a href="/pages/services.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Services</a>
-            <a href="/pages/portfolio.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Portfolio</a>
-            <a href="/pages/blog.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Blog</a>
-            <a href="/pages/about.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">About</a>
-            <a href="/pages/contact.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Contact</a>
-            <a href="/pages/contact.html" class="px-4 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-full text-center flex items-center justify-center space-x-2">
+            <a href="/page/services.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Services</a>
+            <a href="/page/portfolio.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Portfolio</a>
+            <a href="/page/blog.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Blog</a>
+            <a href="/page/about.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">About</a>
+            <a href="/page/contact.html" class="px-4 py-3 text-gray-700 hover:text-primary-600 font-bold rounded-lg hover:bg-primary-50 transition-all">Contact</a>
+            <a href="/page/contact.html" class="px-4 py-3 bg-gradient-to-r from-primary-600 to-secondary-600 text-white font-bold rounded-full text-center flex items-center justify-center space-x-2">
               <i class="fas fa-paper-plane"></i>
               <span>Get Free Quote</span>
             </a>
