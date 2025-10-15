@@ -15,11 +15,18 @@
 </IfModule>
 
 # Force HTTPS (disabled for static hosting - handled by hosting provider)
+# If you need HTTPS redirect, use this proxy-aware version instead:
 # <IfModule mod_rewrite.c>
 #   RewriteEngine On
+#   RewriteCond %{HTTP:X-Forwarded-Proto} !https
 #   RewriteCond %{HTTPS} off
 #   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 # </IfModule>
+
+# Disable RewriteEngine to prevent any redirect loops
+<IfModule mod_rewrite.c>
+  RewriteEngine Off
+</IfModule>
 
 # Block access to sensitive files
 <FilesMatch "(^\.git|^\.env|^\.htaccess|^\.htpasswd|wp-config\.php|readme\.md)">
