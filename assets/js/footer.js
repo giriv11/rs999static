@@ -63,16 +63,16 @@ function loadFooter() {
               We provide Ecommerce Website, SEO, Digital Marketing, Android App, Domain & Web Hosting services starting from Rs.999.
             </p>
             <div class="flex space-x-3 mt-6">
-              <a href="https://www.facebook.com/rs999india/" target="_blank" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-primary-600 hover:to-primary-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
+              <a href="https://www.facebook.com/rs999india/" target="_blank" rel="noopener" aria-label="Visit Rs999 on Facebook" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-primary-600 hover:to-primary-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
                 <i class="fab fa-facebook-f text-gray-300 group-hover:text-white transition-colors relative z-10"></i>
               </a>
-              <a href="https://twitter.com/Rs999india" target="_blank" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-secondary-600 hover:to-secondary-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
+              <a href="https://twitter.com/Rs999india" target="_blank" rel="noopener" aria-label="Visit Rs999 on Twitter" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-secondary-600 hover:to-secondary-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
                 <i class="fab fa-twitter text-gray-300 group-hover:text-white transition-colors relative z-10"></i>
               </a>
-              <a href="https://instagram.com/rs999india" target="_blank" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-pink-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-110 shadow-lg">
+              <a href="https://instagram.com/rs999india" target="_blank" rel="noopener" aria-label="Visit Rs999 on Instagram" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-pink-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-110 shadow-lg">
                 <i class="fab fa-instagram text-gray-300 group-hover:text-white transition-colors relative z-10"></i>
               </a>
-              <a href="https://www.youtube.com/channel/UC-VnPbq_hHDqmygf2uen6Zw" target="_blank" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
+              <a href="https://www.youtube.com/channel/UC-VnPbq_hHDqmygf2uen6Zw" target="_blank" rel="noopener" aria-label="Visit Rs999 on YouTube" class="group relative w-11 h-11 bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl flex items-center justify-center hover:from-red-600 hover:to-red-700 transition-all duration-300 transform hover:scale-110 shadow-lg">
                 <i class="fab fa-youtube text-gray-300 group-hover:text-white transition-colors relative z-10"></i>
               </a>
             </div>
@@ -204,6 +204,8 @@ function loadFooter() {
     <!-- WhatsApp Floating Button -->
     <a href="https://wa.me/918888589767?text=I'm%20inquiring%20about%20website%20designing" 
        target="_blank"
+       rel="noopener"
+       aria-label="Chat with us on WhatsApp"
        class="fixed bottom-6 left-6 bg-gradient-to-br from-green-500 to-green-600 text-white w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl hover:shadow-green-500/50 transition-all duration-300 z-50 hover:scale-110 group">
       <i class="fab fa-whatsapp text-3xl group-hover:scale-110 transition-transform relative z-10"></i>
       <div class="absolute inset-0 bg-white rounded-2xl opacity-0 group-hover:opacity-20 transition-opacity"></div>

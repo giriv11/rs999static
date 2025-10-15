@@ -63,7 +63,7 @@ function loadHeader() {
           </div>
 
           <!-- Mobile Menu Button -->
-          <button id="mobile-menu-button" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-300 focus:outline-none">
+          <button id="mobile-menu-button" aria-label="Toggle mobile menu" aria-expanded="false" class="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg text-gray-700 hover:bg-gray-100 transition-all duration-300 focus:outline-none">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
@@ -97,7 +97,8 @@ function loadHeader() {
   
   if (mobileMenuButton && mobileMenu) {
     mobileMenuButton.addEventListener('click', () => {
-      mobileMenu.classList.toggle('hidden');
+      const isHidden = mobileMenu.classList.toggle('hidden');
+      mobileMenuButton.setAttribute('aria-expanded', !isHidden);
     });
   }
 }
