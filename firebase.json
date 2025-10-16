@@ -15,6 +15,18 @@
       "PAGESPEED_FIXES.md",
       "PAGESPEED_UPDATE_2.md"
     ],
+    "redirects": [
+      {
+        "source": "/about-us",
+        "destination": "/page/about",
+        "type": 301
+      },
+      {
+        "source": "/about-us/",
+        "destination": "/page/about",
+        "type": 301
+      }
+    ],
     "headers": [
       {
         "source": "**/*.@(jpg|jpeg|gif|png|webp|avif|svg|ico)",
