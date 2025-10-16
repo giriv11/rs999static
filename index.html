@@ -46,6 +46,11 @@
 	
 
   
+  <!-- Preload LOCAL fonts for immediate loading -->
+  <link rel="preload" href="assets/fonts/inter/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter/inter-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/inter/inter-700.woff2" as="font" type="font/woff2" crossorigin>
+  
   <!-- Tailwind CSS - Preload for faster rendering -->
   <link rel="preload" href="assets/css/output.css?v=18" as="style">
   <link rel="stylesheet" href="assets/css/output.css?v=18">
@@ -1200,7 +1205,7 @@
   <!-- Scripts -->
   <script src="assets/js/header.js"></script>
   <script src="assets/js/footer.js"></script>
-  <!-- Only load minimal JS needed for this page -->
-  <script src="assets/js/main-minimal.js" defer></script>
+  <!-- Load full main.js for FAQ and animations -->
+  <script src="assets/js/main-minimal.js"></script>
 </body>
 </html>
