@@ -97,13 +97,13 @@ done
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "STEP 5/8: Using minimal JS files"
+echo "STEP 5/8: Ensuring full JS (FAQ & animations)"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 for file in index.html page/*.html blog/*.html; do
   if [ -f "$file" ]; then
-    # Replace main.js with main-minimal.js
-    sed -i 's|assets/js/main\.js|assets/js/main-minimal.js|g' "$file"
-    sed -i 's|\.\./assets/js/main\.js|../assets/js/main-minimal.js|g' "$file"
+    # Ensure using main.js (not minimal) for full functionality
+    sed -i 's|assets/js/main-minimal\.js|assets/js/main.js|g' "$file"
+    sed -i 's|\.\./assets/js/main-minimal\.js|../assets/js/main.js|g' "$file"
     echo "  ✓ $file"
   fi
 done
