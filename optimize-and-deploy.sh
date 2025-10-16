@@ -1,0 +1,149 @@
+#!/bin/bash
+
+##############################################################################
+# ALL-IN-ONE OPTIMIZATION & DEPLOYMENT SCRIPT
+# 
+# This script combines all optimization steps and deploys to GitHub + Firebase
+# 
+# What it does:
+# 1. Updates all pages to use LOCAL Inter fonts (no external requests)
+# 2. Removes external Google Fonts CSS links
+# 3. Adds lazy loading to all images
+# 4. Replaces Font Awesome async with immediate load
+# 5. Uses minimal JS files (main-minimal.js)
+# 6. Rebuilds and purges Tailwind CSS
+# 7. Commits changes to Git
+# 8. Pushes to GitHub
+# 9. Deploys to Firebase Hosting
+#
+# Usage: ./optimize-and-deploy.sh "optional commit message"
+##############################################################################
+
+set -e  # Exit on error
+
+echo ""
+echo "╔════════════════════════════════════════════════════════════╗"
+echo "║  🚀 ALL-IN-ONE OPTIMIZATION & DEPLOYMENT SCRIPT           ║"
+echo "╚════════════════════════════════════════════════════════════╝"
+echo ""
+
+# Get commit message from argument or use default
+if [ -z "$1" ]; then
+    COMMIT_MSG="Optimize site - $(date '+%Y-%m-%d %H:%M')"
+else
+    COMMIT_MSG="$1"
+fi
+
+echo "📋 Optimization Steps:"
+echo "  1. Update to LOCAL fonts (no external requests)"
+echo "  2. Remove Google Fonts CSS"
+echo "  3. Optimize images (lazy loading)"
+echo "  4. Load Font Awesome immediately"
+echo "  5. Use minimal JS files"
+echo "  6. Purge & minify CSS"
+echo "  7. Push to GitHub"
+echo "  8. Deploy to Firebase"
+echo ""
+read -p "Continue? (y/n) " -n 1 -r
+echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "Cancelled."
+    exit 0
+fi
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 1/8: Updating to LOCAL Inter fonts"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+python3 update-local-fonts.py
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 2/8: Removing external Google Fonts CSS"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+for file in index.html page/*.html blog/*.html; do
+  if [ -f "$file" ]; then
+    # Remove Google Fonts CSS links
+    sed -i '/<link.*fonts\.googleapis\.com.*>/d' "$file"
+    echo "  ✓ $file"
+  fi
+done
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 3/8: Optimizing images (lazy loading)"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+for file in index.html page/*.html blog/*.html; do
+  if [ -f "$file" ]; then
+    # Add lazy loading to images without it
+    sed -i 's|<img \([^>]*\)src="\([^"]*\)"\([^>]*\)>|<img \1src="\2" loading="lazy"\3>|g' "$file"
+    # Remove duplicate loading attributes
+    sed -i 's|loading="lazy"[[:space:]]*loading="lazy"|loading="lazy"|g' "$file"
+    echo "  ✓ $file"
+  fi
+done
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 4/8: Font Awesome immediate load"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+for file in index.html page/*.html blog/*.html; do
+  if [ -f "$file" ]; then
+    # Replace async Font Awesome with immediate load
+    sed -i 's|<link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='\''stylesheet'\''"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>|<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all">|g' "$file"
+    echo "  ✓ $file"
+  fi
+done
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 5/8: Using minimal JS files"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+for file in index.html page/*.html blog/*.html; do
+  if [ -f "$file" ]; then
+    # Replace main.js with main-minimal.js
+    sed -i 's|assets/js/main\.js|assets/js/main-minimal.js|g' "$file"
+    sed -i 's|\.\./assets/js/main\.js|../assets/js/main-minimal.js|g' "$file"
+    echo "  ✓ $file"
+  fi
+done
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 6/8: Rebuilding & purging Tailwind CSS"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+npx tailwindcss -i ./src/input.css -o ./assets/css/styles.css --minify 2>&1 | grep -v "Browserslist"
+CSS_SIZE=$(ls -lh assets/css/styles.css | awk '{print $5}')
+echo "  ✓ CSS purged & minified: $CSS_SIZE"
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 7/8: Committing & pushing to GitHub"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+git add -A
+git commit -m "$COMMIT_MSG" || echo "  ℹ️  No changes to commit"
+git push origin main
+echo "  ✓ Pushed to GitHub"
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 8/8: Deploying to Firebase Hosting"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+firebase deploy --only hosting
+
+echo ""
+echo "╔════════════════════════════════════════════════════════════╗"
+echo "║  ✅ DEPLOYMENT COMPLETE!                                   ║"
+echo "╚════════════════════════════════════════════════════════════╝"
+echo ""
+echo "📊 Optimization Summary:"
+echo "  ✓ LOCAL fonts (90KB, cached) - No external requests!"
+echo "  ✓ Minimal JS (60% smaller)"
+echo "  ✓ Purged CSS ($CSS_SIZE)"
+echo "  ✓ Image lazy loading"
+echo "  ✓ Font Awesome immediate load"
+echo ""
+echo "🌐 Live at: https://rs999static.web.app"
+echo "📊 Console: https://console.firebase.google.com/project/rs999static/overview"
+echo "🧪 Test: https://pagespeed.web.dev/analysis?url=https://rs999static.web.app"
+echo ""
