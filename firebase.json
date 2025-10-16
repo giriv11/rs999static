@@ -15,16 +15,6 @@
       "PAGESPEED_FIXES.md",
       "PAGESPEED_UPDATE_2.md"
     ],
-    "rewrites": [
-      {
-        "source": "/page/**",
-        "destination": "/page/index.html"
-      },
-      {
-        "source": "/blog/**",
-        "destination": "/blog/index.html"
-      }
-    ],
     "headers": [
       {
         "source": "**/*.@(jpg|jpeg|gif|png|webp|avif|svg|ico)",
