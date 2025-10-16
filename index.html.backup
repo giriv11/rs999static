@@ -750,7 +750,7 @@
         <!-- Project 1 -->
         <div class="card overflow-hidden group">
           <div class="relative overflow-hidden h-64 bg-gradient-to-br from-primary-400 to-primary-600">
-            <img src="assets/images/client-Electricbikescootercar.co_.uk-rs999.avif" loading="lazy" alt="Electricbikescootercar.co.uk eCommerce Website" width="400" height="256" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <img src="assets/images/client-Electricbikescootercar.co_.uk-rs999.avif" alt="Electricbikescootercar.co.uk eCommerce Website" width="400" height="256" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a href="pages/portfolio.html" class="bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold">View Details</a>
             </div>
@@ -765,7 +765,7 @@
         <!-- Project 2 -->
         <div class="card overflow-hidden group">
           <div class="relative overflow-hidden h-64 bg-gradient-to-br from-green-400 to-green-600">
-            <img src="assets/images/client-Nimboopaniadvertisers.com-rs999.avif" loading="lazy" alt="Nimboopaniadvertisers.com Business Website" width="400" height="256" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <img src="assets/images/client-Nimboopaniadvertisers.com-rs999.avif" alt="Nimboopaniadvertisers.com Business Website" width="400" height="256" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a href="pages/portfolio.html" class="bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold">View Details</a>
             </div>
@@ -780,7 +780,7 @@
         <!-- Project 3 -->
         <div class="card overflow-hidden group">
           <div class="relative overflow-hidden h-64 bg-gradient-to-br from-orange-400 to-orange-600">
-            <img src="assets/images/client-Goakhabar.com-rs999.avif" loading="lazy" alt="Goakhabar.com News Website" width="400" height="256" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            <img src="assets/images/client-Goakhabar.com-rs999.avif" alt="Goakhabar.com News Website" width="400" height="256" loading="lazy" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             <div class="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
               <a href="pages/portfolio.html" class="bg-white text-primary-600 px-6 py-3 rounded-lg font-semibold">View Details</a>
             </div>
@@ -806,7 +806,7 @@
         <div class="grid md:grid-cols-2 gap-12 items-center">
           <div class="relative">
             <div class="absolute -inset-4 bg-gradient-to-r from-primary-500 to-secondary-500 rounded-3xl opacity-20 blur-xl"></div>
-            <img src="assets/images/low-cost-website-design-1024x683-1.avif" loading="lazy" alt="About Rs999 Web Services" width="1024" height="683" loading="lazy" class="relative rounded-2xl shadow-2xl">
+            <img src="assets/images/low-cost-website-design-1024x683-1.avif" alt="About Rs999 Web Services" width="1024" height="683" loading="lazy" class="relative rounded-2xl shadow-2xl">
           </div>
           <div>
             <!-- Modern Section Header -->
@@ -1010,7 +1010,7 @@
         <!-- Blog Post 1 -->
         <div class="card overflow-hidden">
           <div class="h-48 bg-gradient-to-br from-primary-400 to-primary-600">
-            <img src="https://via.placeholder.com/400x250/3b82f6/ffffff?text=Blog+Post" loading="lazy" alt="Freelance Website Designers in Mumbai" width="400" height="250" loading="lazy" class="w-full h-full object-cover">
+            <img src="https://via.placeholder.com/400x250/3b82f6/ffffff?text=Blog+Post" alt="Freelance Website Designers in Mumbai" width="400" height="250" loading="lazy" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
             <div class="text-sm text-gray-500 mb-2">
@@ -1031,7 +1031,7 @@
         <!-- Blog Post 2 -->
         <div class="card overflow-hidden">
           <div class="h-48 bg-gradient-to-br from-green-400 to-green-600">
-            <img src="https://via.placeholder.com/400x250/10b981/ffffff?text=Blog+Post" loading="lazy" alt="Web Designer in Mumbai" width="400" height="250" loading="lazy" class="w-full h-full object-cover">
+            <img src="https://via.placeholder.com/400x250/10b981/ffffff?text=Blog+Post" alt="Web Designer in Mumbai" width="400" height="250" loading="lazy" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
             <div class="text-sm text-gray-500 mb-2">
@@ -1052,7 +1052,7 @@
         <!-- Blog Post 3 -->
         <div class="card overflow-hidden">
           <div class="h-48 bg-gradient-to-br from-orange-400 to-orange-600">
-            <img src="https://via.placeholder.com/400x250/f97316/ffffff?text=Blog+Post" loading="lazy" alt="Ecommerce Website Development Mumbai" width="400" height="250" loading="lazy" class="w-full h-full object-cover">
+            <img src="https://via.placeholder.com/400x250/f97316/ffffff?text=Blog+Post" alt="Ecommerce Website Development Mumbai" width="400" height="250" loading="lazy" class="w-full h-full object-cover">
           </div>
           <div class="p-6">
             <div class="text-sm text-gray-500 mb-2">

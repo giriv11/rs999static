@@ -7,49 +7,8 @@
   <title>About Us | Rs999 Web Services</title>
   
   <link href="../assets/css/output.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all">
-  <!-- Critical inline styles for immediate text rendering -->
-  <style>
-    /* System font stack for instant text rendering with Inter as primary */
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 400;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    }
-    
-    /* Load Inter font with font-display: swap */
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2) format('woff2');
-    }
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2) format('woff2');
-    }
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYAZ9hiA.woff2) format('woff2');
-    }
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 800;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYAZ9hiA.woff2) format('woff2');
-    }
-  </style>
-
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50">
 
@@ -84,7 +43,7 @@
           </div>
         </div>
         <div>
-          <img src="https://via.placeholder.com/600x400/3b82f6/ffffff?text=About+Us" loading="lazy" alt="About Rs999" class="rounded-lg shadow-2xl">
+          <img src="https://via.placeholder.com/600x400/3b82f6/ffffff?text=About+Us" alt="About Rs999" class="rounded-lg shadow-2xl">
         </div>
       </div>
     </div>
@@ -280,6 +239,6 @@
 
   <script src="../assets/js/header.js"></script>
   <script src="../assets/js/footer.js"></script>
-  <script src="../assets/js/main-minimal.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>

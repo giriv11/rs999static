@@ -7,49 +7,8 @@
   <title>Our Services | Rs999 Web Services</title>
   
   <link href="../assets/css/output.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all">
-  <!-- Critical inline styles for immediate text rendering -->
-  <style>
-    /* System font stack for instant text rendering with Inter as primary */
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-      font-weight: 400;
-    }
-    h1, h2, h3, h4, h5, h6 {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    }
-    
-    /* Load Inter font with font-display: swap */
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuLyfAZ9hiA.woff2) format('woff2');
-    }
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 600;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuGKYAZ9hiA.woff2) format('woff2');
-    }
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 700;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuFuYAZ9hiA.woff2) format('woff2');
-    }
-    @font-face {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 800;
-      font-display: swap;
-      src: url(https://fonts.gstatic.com/s/inter/v13/UcCO3FwrK3iLTeHuS_fvQtMwCp50KnMw2boKoduKmMEVuDyYAZ9hiA.woff2) format('woff2');
-    }
-  </style>
-
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'"><noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body class="bg-gray-50">
 
@@ -98,14 +57,14 @@
           <a href="contact.html" class="btn-primary inline-block">Get Started</a>
         </div>
         <div class="card overflow-hidden">
-          <img src="https://via.placeholder.com/600x400/3b82f6/ffffff?text=Web+Design" loading="lazy" alt="Web Design" class="w-full h-full object-cover">
+          <img src="https://via.placeholder.com/600x400/3b82f6/ffffff?text=Web+Design" alt="Web Design" class="w-full h-full object-cover">
         </div>
       </div>
 
       <!-- Service 2: eCommerce Solutions -->
       <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
         <div class="card overflow-hidden order-2 md:order-1">
-          <img src="https://via.placeholder.com/600x400/10b981/ffffff?text=eCommerce" loading="lazy" alt="eCommerce" class="w-full h-full object-cover">
+          <img src="https://via.placeholder.com/600x400/10b981/ffffff?text=eCommerce" alt="eCommerce" class="w-full h-full object-cover">
         </div>
         <div class="order-1 md:order-2">
           <div class="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full font-semibold mb-4">
@@ -168,14 +127,14 @@
           <a href="contact.html" class="btn-primary inline-block">Get Started</a>
         </div>
         <div class="card overflow-hidden">
-          <img src="https://via.placeholder.com/600x400/f97316/ffffff?text=Digital+Marketing" loading="lazy" alt="Digital Marketing" class="w-full h-full object-cover">
+          <img src="https://via.placeholder.com/600x400/f97316/ffffff?text=Digital+Marketing" alt="Digital Marketing" class="w-full h-full object-cover">
         </div>
       </div>
 
       <!-- Service 4: Mobile App Development -->
       <div class="grid md:grid-cols-2 gap-12 items-center mb-20">
         <div class="card overflow-hidden order-2 md:order-1">
-          <img src="https://via.placeholder.com/600x400/8b5cf6/ffffff?text=Mobile+Apps" loading="lazy" alt="Mobile Apps" class="w-full h-full object-cover">
+          <img src="https://via.placeholder.com/600x400/8b5cf6/ffffff?text=Mobile+Apps" alt="Mobile Apps" class="w-full h-full object-cover">
         </div>
         <div class="order-1 md:order-2">
           <div class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full font-semibold mb-4">
@@ -238,14 +197,14 @@
           <a href="contact.html" class="btn-primary inline-block">Get Started</a>
         </div>
         <div class="card overflow-hidden">
-          <img src="https://via.placeholder.com/600x400/ec4899/ffffff?text=Graphic+Design" loading="lazy" alt="Graphic Design" class="w-full h-full object-cover">
+          <img src="https://via.placeholder.com/600x400/ec4899/ffffff?text=Graphic+Design" alt="Graphic Design" class="w-full h-full object-cover">
         </div>
       </div>
 
       <!-- Service 6: Maintenance & Support -->
       <div class="grid md:grid-cols-2 gap-12 items-center">
         <div class="card overflow-hidden order-2 md:order-1">
-          <img src="https://via.placeholder.com/600x400/06b6d4/ffffff?text=Support" loading="lazy" alt="Support" class="w-full h-full object-cover">
+          <img src="https://via.placeholder.com/600x400/06b6d4/ffffff?text=Support" alt="Support" class="w-full h-full object-cover">
         </div>
         <div class="order-1 md:order-2">
           <div class="inline-block bg-cyan-100 text-cyan-700 px-4 py-2 rounded-full font-semibold mb-4">
@@ -340,6 +299,6 @@
 
   <script src="../assets/js/header.js"></script>
   <script src="../assets/js/footer.js"></script>
-  <script src="../assets/js/main-minimal.js"></script>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>
