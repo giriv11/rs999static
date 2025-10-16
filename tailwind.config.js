@@ -3,7 +3,16 @@ module.exports = {
   content: [
     "./*.html",
     "./page/**/*.html",
+    "./blog/**/*.html",
     "./assets/js/**/*.js"
+  ],
+  safelist: [
+    // Keep critical animations and transitions
+    'animate-fade-in-up',
+    'animate-slide-in-right', 
+    'animate-zoom-in',
+    'animate-pulse-slow',
+    'animate-float',
   ],
   theme: {
     extend: {

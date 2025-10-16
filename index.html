@@ -89,9 +89,8 @@
     }
   </style>
   
-  <!-- Font Awesome - Async load after page content -->
-  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+  <!-- Font Awesome - Load immediately to prevent layout shifts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="all">
 </head>
 <body class="bg-gray-50">
 
@@ -100,7 +99,7 @@
 
   <!-- Hero Section with Modern Animation -->
       <!-- Hero Section -->
-    <section class="relative py-16 md:py-20 flex items-center justify-center overflow-hidden" style="min-height: 600px;">
+    <section class="relative py-16 md:py-20 flex items-center justify-center overflow-hidden" style="min-height: 600px; height: 600px;">
       <!-- Animated Gradient Background -->
       <div class="absolute inset-0 bg-gradient-to-br from-secondary-900 via-primary-800 to-secondary-700 animate-gradient" style="background-size: 400% 400%;"></div>
       
@@ -118,7 +117,7 @@
             <!-- Left Content -->
             <div class="text-white">
               <!-- Badge with Icon -->
-              <div class="inline-flex items-center px-4 py-2 bg-black bg-opacity-40 backdrop-blur-xl rounded-full mb-6 animate-fade-in-up border border-white border-opacity-50 shadow-2xl">
+              <div class="inline-flex items-center px-4 py-2 bg-black bg-opacity-40 backdrop-blur-xl rounded-full mb-6 border border-white border-opacity-50 shadow-2xl" style="visibility: visible; opacity: 1;">
                 <div class="w-8 h-8 bg-primary-400 rounded-full flex items-center justify-center mr-2 shadow-lg">
                   <i class="fas fa-trophy text-white text-sm"></i>
                 </div>
@@ -129,9 +128,9 @@
               </div>
 
               <!-- Main Heading -->
-              <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight animate-fade-in-up" style="animation-delay: 0.2s;">
-                <span class="block text-white drop-shadow-lg">Low Cost</span>
-                <span class="block bg-gradient-to-r from-primary-300 via-green-200 to-secondary-300 bg-clip-text text-transparent drop-shadow-2xl">
+              <h1 class="font-display text-3xl md:text-4xl lg:text-5xl font-black mb-4 leading-tight animate-fade-in-up" style="animation-delay: 0.2s; will-change: auto;">
+                <span class="block text-white drop-shadow-lg" style="font-size: inherit; line-height: inherit;">Low Cost</span>
+                <span class="block bg-gradient-to-r from-primary-300 via-green-200 to-secondary-300 bg-clip-text text-transparent drop-shadow-2xl" style="font-size: inherit; line-height: inherit; min-height: 1.2em;">
                   Website Design & Development Company 
                 </span>
                 <div class="flex items-center mt-3 space-x-2">
