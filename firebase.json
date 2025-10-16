@@ -25,6 +25,11 @@
         "source": "/about-us/",
         "destination": "/page/about",
         "type": 301
+      },
+      {
+        "source": "/contact",
+        "destination": "/page/contact",
+        "type": 301
       }
     ],
     "headers": [
