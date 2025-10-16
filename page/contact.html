@@ -6,10 +6,11 @@
   <meta name="description" content="Contact Rs999 Web Services - Get in touch for affordable website design and development services in India.">
   <title>Contact Us | Rs999 Web Services</title>
   
-  <!-- Preload LOCAL fonts for immediate loading -->
-  <link rel="preload" href="../assets/fonts/inter/inter-400.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../assets/fonts/inter/inter-600.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="preload" href="../assets/fonts/inter/inter-700.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Preload LOCAL fonts for immediate loading - ABSOLUTE PATHS -->
+  <link rel="preload" href="/assets/fonts/inter/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter/inter-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter/inter-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter/inter-800.woff2" as="font" type="font/woff2" crossorigin>
   
   <link href="../assets/css/output.css" rel="stylesheet">
   <!-- Font Awesome - LOCAL for immediate loading -->
@@ -25,34 +26,34 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     }
     
-    /* Load Inter font with font-display: swap - LOCAL FILES */
+    /* Load Inter font with font-display: block - Forces Inter to load before showing text */
     @font-face {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 400;
-      font-display: swap;
-      src: url(../assets/fonts/inter/inter-400.woff2) format('woff2');
+      font-display: block;
+      src: url(/assets/fonts/inter/inter-400.woff2) format('woff2');
     }
     @font-face {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 600;
-      font-display: swap;
-      src: url(../assets/fonts/inter/inter-600.woff2) format('woff2');
+      font-display: block;
+      src: url(/assets/fonts/inter/inter-600.woff2) format('woff2');
     }
     @font-face {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 700;
-      font-display: swap;
-      src: url(../assets/fonts/inter/inter-700.woff2) format('woff2');
+      font-display: block;
+      src: url(/assets/fonts/inter/inter-700.woff2) format('woff2');
     }
     @font-face {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 800;
-      font-display: swap;
-      src: url(../assets/fonts/inter/inter-800.woff2) format('woff2');
+      font-display: block;
+      src: url(/assets/fonts/inter/inter-800.woff2) format('woff2');
     }
   </style>
 
