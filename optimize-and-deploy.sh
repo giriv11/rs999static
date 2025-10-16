@@ -119,12 +119,71 @@ echo "  ✓ CSS purged & minified: $CSS_SIZE"
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "STEP 7/8: Committing & pushing to GitHub"
+echo "STEP 7/9: Committing & pushing to GitHub"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+# Collect what was changed for commit message
+CHANGES=""
+if git diff --cached --quiet 2>/dev/null; then
+  git add -A
+fi
+
+# Check what files were modified
+MODIFIED_FILES=$(git diff --cached --name-only 2>/dev/null | wc -l)
+if [ "$MODIFIED_FILES" -gt 0 ]; then
+  CHANGES="Modified $MODIFIED_FILES files"
+  
+  # Add specific details
+  if git diff --cached --name-only | grep -q "\.html"; then
+    CHANGES="$CHANGES: HTML pages"
+  fi
+  if git diff --cached --name-only | grep -q "\.css"; then
+    CHANGES="$CHANGES + CSS"
+  fi
+  if git diff --cached --name-only | grep -q "\.js"; then
+    CHANGES="$CHANGES + JS"
+  fi
+  if git diff --cached --name-only | grep -q "fonts/"; then
+    CHANGES="$CHANGES + fonts"
+  fi
+fi
+
+# Create detailed commit message
+if [ -z "$CHANGES" ]; then
+  DETAILED_MSG="$COMMIT_MSG"
+else
+  DETAILED_MSG="$COMMIT_MSG
+
+Changes:
+- $CHANGES
+- LOCAL fonts (no external requests)
+- CSS purged: $CSS_SIZE
+- Full JS (FAQ & animations)
+- Image lazy loading
+- Font Awesome immediate load"
+fi
+
+# Configure git to use credential cache if not already set
+git config --global credential.helper cache 2>/dev/null || true
+git config --global credential.helper 'cache --timeout=3600' 2>/dev/null || true
+
+# Commit with detailed message
 git add -A
-git commit -m "$COMMIT_MSG" || echo "  ℹ️  No changes to commit"
-git push origin main
-echo "  ✓ Pushed to GitHub"
+if git commit -m "$DETAILED_MSG"; then
+  echo "  ✓ Committed changes"
+  
+  # Push to GitHub
+  echo "  → Pushing to GitHub..."
+  if git push origin main 2>&1; then
+    echo "  ✓ Pushed to GitHub successfully"
+  else
+    echo "  ⚠️  Push failed - may need authentication"
+    echo "  💡 Run: git push origin main"
+    exit 1
+  fi
+else
+  echo "  ℹ️  No changes to commit"
+fi
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
