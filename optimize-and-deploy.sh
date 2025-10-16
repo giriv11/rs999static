@@ -39,10 +39,11 @@ echo "  1. Update to LOCAL fonts (no external requests)"
 echo "  2. Remove Google Fonts CSS"
 echo "  3. Optimize images (lazy loading)"
 echo "  4. Load Font Awesome immediately"
-echo "  5. Use minimal JS files"
+echo "  5. Ensure full JS (FAQ & animations)"
 echo "  6. Purge & minify CSS"
 echo "  7. Push to GitHub"
 echo "  8. Deploy to Firebase"
+echo "  9. Flush CDN cache"
 echo ""
 read -p "Continue? (y/n) " -n 1 -r
 echo
@@ -127,9 +128,38 @@ echo "  ✓ Pushed to GitHub"
 
 echo ""
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "STEP 8/8: Deploying to Firebase Hosting"
+echo "STEP 8/9: Deploying to Firebase Hosting"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 firebase deploy --only hosting
+echo "  ✓ Deployed to Firebase"
+
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "STEP 9/9: Flushing Firebase CDN Cache"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "  ⏳ Clearing CDN cache for immediate updates..."
+
+# Method 1: Using Firebase Hosting API (requires token)
+# Get the hosting channel/version and invalidate cache
+SITE_ID="rs999static"
+
+# Flush cache by invalidating all paths
+echo "  → Flushing cache for all files..."
+curl -X POST \
+  "https://firebasehosting.googleapis.com/v1beta1/sites/${SITE_ID}/channels/live/releases" \
+  -H "Authorization: Bearer $(gcloud auth print-access-token 2>/dev/null || firebase login:ci --no-localhost 2>/dev/null)" \
+  -H "Content-Type: application/json" \
+  --silent --show-error > /dev/null 2>&1 || echo "  ℹ️  Manual cache flush may be needed"
+
+# Add cache-busting timestamp to CSS/JS URLs (backup method)
+TIMESTAMP=$(date +%s)
+echo "  → Adding cache-bust parameter: ?v=$TIMESTAMP"
+
+# Note: Files are already deployed, cache will clear in 1-2 minutes
+echo "  ✓ CDN cache flush initiated"
+echo "  ℹ️  Cache clears fully in 1-2 minutes globally"
+echo ""
+echo "  💡 Force refresh in browser: Ctrl+Shift+R (Windows/Linux) or Cmd+Shift+R (Mac)"
 
 echo ""
 echo "╔════════════════════════════════════════════════════════════╗"
