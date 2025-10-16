@@ -1,0 +1,41 @@
+# Ignored files for Firebase Hosting
+
+# Build files
+node_modules/
+src/
+
+# Config files
+package.json
+package-lock.json
+tailwind.config.js
+
+# Documentation
+readme.md
+*.md
+!README.md
+
+# Git
+.git/
+.gitignore
+
+# Development
+.env
+.env.*
+
+# Server configs (not needed for Firebase)
+.htaccess
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
